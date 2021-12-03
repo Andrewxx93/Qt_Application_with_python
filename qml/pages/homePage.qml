@@ -116,6 +116,76 @@ Item {
                 font.pointSize: 12
 
             }
+
+            Label {
+                id: labelGymName
+                y: 62
+                height: 25
+                color: "#ffffff"
+                text: qsTr("Gym Name")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: 12
+                anchors.rightMargin: 10
+                anchors.leftMargin: 10
+            }
+
+            Label {
+                id: labelRoomName
+                x: 20
+                y: 93
+                height: 25
+                color: "#ffffff"
+                text: qsTr("Room Name")
+                anchors.left: parent.left
+                anchors.right: parent.right
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: 12
+                anchors.rightMargin: 10
+                anchors.leftMargin: 10
+            }
+
+            GridLayout {
+                anchors.fill: parent
+                columns: 3
+                anchors.rightMargin: 10
+                CustomTextField {
+                    id: addGym
+                    placeholderText: qsTr("Add  Gym Name")
+                    Keys.onReturnPressed: {
+                        backend.jsonCreator(addGym.text,addRoom.text)
+                    }
+                    Layout.fillWidth: true
+                    Keys.onEnterPressed: {
+                        backend.jsonCreator(addGym.text,addRoom.text)
+                    }
+                }
+
+                CustomButton {
+                    id: btnSendValue
+                    text: "Send"
+                    Layout.preferredWidth: 250
+                    Layout.maximumWidth: 200
+                    onClicked: {
+                        backend.jsonCreator(addGym.text,addRoom.text)
+                    }
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 40
+                }
+
+                CustomTextField {
+                    id: addRoom
+                    placeholderText: qsTr("Add Room")
+                    Layout.fillWidth: true
+                }
+                rows: 1
+                anchors.leftMargin: 10
+            }
+
+
         }
     }
 
@@ -136,6 +206,12 @@ Item {
             rectangleVisible.visible = isVisible
         }
 
+        function onSetGymName(value){
+            labelGymName.text = value
+        }
+
+
+
     }
 
 }
@@ -143,6 +219,6 @@ Item {
 /*##^##
 Designer {
     D{i:0;autoSize:true;height:480;width:800}D{i:4}D{i:5}D{i:6}D{i:3}D{i:2}D{i:8}D{i:9}
-D{i:7}D{i:1}D{i:10}
+D{i:10}D{i:11}D{i:13}D{i:14}D{i:15}D{i:12}D{i:7}D{i:1}D{i:16}
 }
 ##^##*/
