@@ -306,6 +306,7 @@ Window {
                             onClicked: {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
+                                btnTextEditor.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
 
                             }
@@ -366,6 +367,21 @@ Window {
 
 
                         }
+
+                        LeftMenuButton {
+                            id: btnTextEditor
+                            width: leftMenu.width
+                            text: qsTr("Text Edit")
+                            btnIconSource: "../images/svg_images/text_editor_icon.svg"
+                            onClicked: {
+                                btnHome.isActiveMenu = false
+                                btnSettings.isActiveMenu = false
+                                btnTextEditor.isActiveMenu = true
+                                stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
+                            }
+
+
+                        }
                     }
 
                     LeftMenuButton {
@@ -378,6 +394,7 @@ Window {
                         btnIconSource: "../images/svg_images/settings_icon.svg"
                         onClicked: {
                             btnHome.isActiveMenu = false
+                            btnTextEditor.isActiveMenu = false
                             btnSettings.isActiveMenu = true
                             stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
 
@@ -591,7 +608,7 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75}D{i:1}D{i:3}D{i:2}D{i:34}D{i:36}D{i:35}D{i:38}D{i:37}D{i:40}
-D{i:39}D{i:42}D{i:41}D{i:43}
+    D{i:0;formeditorZoom:0.75}D{i:1}D{i:26}D{i:3}D{i:2}D{i:35}D{i:37}D{i:36}D{i:39}D{i:38}
+D{i:41}D{i:40}D{i:43}D{i:42}D{i:44}
 }
 ##^##*/
