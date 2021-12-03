@@ -6,7 +6,7 @@ import datetime
 
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
-from PySide2.QtCore import QObject, Slot, Signal, QTimer
+from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
 
 
 class MainWindow(QObject):
@@ -26,6 +26,18 @@ class MainWindow(QObject):
 
     # Signal Visible
     isVisible = Signal(bool)
+
+    # Signal Read Text
+    readText = Signal(str)
+
+    # Open File
+    @Slot(str)
+    def openFile(self, filePath):
+        file = open(QUrl(filePath).toLocalFile(), encoding="utf-8")
+        text = file.read()
+        file.close()
+        print(text)
+        self.readText.emit(str(text))
 
     # Show / Hide Rectangle
     @Slot(bool)

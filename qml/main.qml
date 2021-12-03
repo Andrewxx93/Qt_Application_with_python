@@ -3,6 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import "controls"
+import QtQuick.Dialogs 1.3
 Window {
     id: mainWindow
     width: 1000
@@ -310,6 +311,26 @@ Window {
                             width: leftMenu.width
                             text: qsTr("Open")
                             btnIconSource: "../images/svg_images/open_icon.svg"
+
+                            onPressed: {
+                                fileOpen.open()
+                            }
+
+                            FileDialog{
+                                id: fileOpen
+                                title: "Please choose a file"
+                                folder: shortcuts.home
+                                selectMultiple: false
+                                nameFilters: ["Text File (*.txt)"]
+                                onAccepted:{
+                                    backend.openFile(fileOpen.fileUrl)
+
+                                }
+
+
+                            }
+
+
                         }
 
                         LeftMenuButton {
@@ -317,6 +338,26 @@ Window {
                             width: leftMenu.width
                             text: qsTr("Save")
                             btnIconSource: "../images/svg_images/save_icon.svg"
+
+
+                            onPressed: {
+                                fileSave.open()
+                            }
+
+                            FileDialog{
+                                id: fileSave
+                                title: "Save file"
+                                folder: shortcuts.home
+                                nameFilters: ["Text File (*.txt)"]
+                                selectExisting: false
+                                onAccepted:{
+
+                                }
+
+
+                            }
+
+
                         }
                     }
 
@@ -353,7 +394,7 @@ Window {
                     StackView {
                         id: stackView
                         anchors.fill: parent
-                        initialItem: Qt.resolvedUrl("pages/homePage.qml")
+                        initialItem: Qt.resolvedUrl("pages/textEditor.qml")
                     }
                 }
 
@@ -536,8 +577,8 @@ Window {
 /*##^##
 Designer {
     D{i:0;formeditorZoom:0.75}D{i:1}D{i:5}D{i:7}D{i:8}D{i:6}D{i:10}D{i:11}D{i:12}D{i:9}
-D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}D{i:22}D{i:23}D{i:20}D{i:24}D{i:18}
-D{i:26}D{i:25}D{i:28}D{i:30}D{i:31}D{i:29}D{i:27}D{i:17}D{i:3}D{i:2}D{i:32}D{i:34}
-D{i:33}D{i:36}D{i:35}D{i:38}D{i:37}D{i:40}D{i:39}
+D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}D{i:23}D{i:22}D{i:25}D{i:24}D{i:20}
+D{i:26}D{i:18}D{i:28}D{i:27}D{i:30}D{i:32}D{i:33}D{i:31}D{i:29}D{i:17}D{i:3}D{i:2}
+D{i:34}D{i:36}D{i:35}D{i:38}D{i:37}D{i:40}D{i:39}D{i:42}D{i:41}
 }
 ##^##*/
