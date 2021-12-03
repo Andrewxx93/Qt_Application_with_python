@@ -2,6 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 2.15
 
 Item {
+    property string getText: textArea.text //To read from text area
+    property string setText: ""            //To write in the text area
+
+
     Rectangle {
         id: rectangle
         color: "#2c313c"
@@ -22,6 +26,7 @@ Item {
                 selectionColor: "#ff007f"
                 color: "#ffffff"
                 font.pointSize: 12
+                text: setText
 
             }
 
