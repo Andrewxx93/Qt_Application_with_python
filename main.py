@@ -7,6 +7,7 @@ import datetime
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
+from PySide2.QtWidgets import QComboBox
 
 
 class MainWindow(QObject):
@@ -39,8 +40,6 @@ class MainWindow(QObject):
     # Signal set Gym name
     setGymName = Signal(str)
 
-    # Signal set Room name
-    setRoomName = Signal(str)
 
     # Text String
     textField = ""
@@ -96,6 +95,9 @@ class MainWindow(QObject):
     def jsonCreator(self,gymName):
         print(f"Gym name: {gymName}")
         self.setGymName.emit("The Gym name is: "+ gymName)
+
+
+  
        
 
 
