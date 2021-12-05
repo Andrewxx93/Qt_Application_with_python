@@ -20,7 +20,6 @@ class MainWindow(QObject):
         self.timer.start(1000)
 
         # Base JSON for Specific Room Management
-        
         """ 
             creare JSON base da caricare
         """
@@ -40,11 +39,8 @@ class MainWindow(QObject):
     # Signal set Gym name
     setGymName = Signal(str)
 
-
     # Text String
     textField = ""
-
-
 
     # Open File
     @Slot(str)
@@ -90,16 +86,13 @@ class MainWindow(QObject):
             self.setName.emit("Welcome, " + name)
         else:
             self.setName.emit("Welcome")
-   
-    @Slot(str)
-    def jsonCreator(self,gymName):
+
+    @Slot(str, str, str)
+    def jsonCreator(self, gymName, roomName1, roomName2):
         print(f"Gym name: {gymName}")
-        self.setGymName.emit("The Gym name is: "+ gymName)
-
-
-  
-       
-
+        print(f"Room1 name: {roomName1}")
+        print(f"Room2 name: {roomName2}")
+        self.setGymName.emit("The Gym name is: " + gymName)
 
 
 if __name__ == "__main__":

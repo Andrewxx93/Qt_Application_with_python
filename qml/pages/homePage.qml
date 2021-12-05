@@ -149,19 +149,49 @@ Item {
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.topMargin: 10
-                    columns: 3
+                    columns: 2
+                    rows: 3
+                    anchors.leftMargin: 10
                     anchors.rightMargin: 10
                     CustomTextField {
                         id: addGym
                         placeholderText: qsTr("Add  Gym Name")
+                        Layout.fillWidth: true
                         Keys.onReturnPressed: {
                             backend.jsonCreator(addGym.text)
                         }
-                        Layout.fillWidth: true
+
                         Keys.onEnterPressed: {
                             backend.jsonCreator(addGym.text)
                         }
                     }
+
+                    CustomTextField {
+                        id: addRoom1
+                        placeholderText: qsTr("Add Room1 Name")
+                        Layout.fillWidth: true
+                        Keys.onReturnPressed: {
+                           backend.jsonCreator(addGym.text)
+                        }
+
+                        Keys.onEnterPressed: {
+                           backend.jsonCreator(addGym.text)
+                        }
+                    }
+
+                    CustomTextField {
+                        id: addRoom2
+                        placeholderText: qsTr("Add Room2 Name")
+                        Layout.fillWidth: true
+                        Keys.onReturnPressed: {
+                           backend.jsonCreator(addGym.text)
+                        }
+
+                        Keys.onEnterPressed: {
+                           backend.jsonCreator(addGym.text)
+                        }
+                    }
+
 
                     CustomButton {
                         id: btnSendValue
@@ -169,33 +199,39 @@ Item {
                         Layout.preferredWidth: 250
                         Layout.maximumWidth: 200
                         onClicked: {
-                            backend.jsonCreator(addGym.text)
+                            backend.jsonCreator(addGym.text, addRoom1.text,addRoom2.text)
+
                         }
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
                     }
-                    rows: 1
-                    anchors.leftMargin: 10
+
+
+
+
                 }
 
                 GridLayout {
+                    id: gridLayout
                     x: -480
 
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.top: parent.top
-                    anchors.topMargin: 60
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 10
                     anchors.rightMargin: 10
                     anchors.leftMargin: 10
                     rows: 1
                     columns: 2
 
-                    ComboBox {
+                    CustomComboBox {
                         id: comboBox
                         Layout.preferredWidth: 300
                         Layout.fillWidth: true
                         model: ["First","Second","Third"]
-                        currentIndex: -1
+                        //displayText: comboBox.currentText
+
+                        currentIndex: 0
 
                     }
 
@@ -245,6 +281,7 @@ Item {
 /*##^##
 Designer {
     D{i:0;autoSize:true;height:480;width:800}D{i:4}D{i:5}D{i:6}D{i:3}D{i:2}D{i:8}D{i:9}
-D{i:10}D{i:13}D{i:14}D{i:12}D{i:16}D{i:17}D{i:15}D{i:11}D{i:7}D{i:1}D{i:18}
+D{i:10}D{i:13}D{i:14}D{i:15}D{i:16}D{i:12}D{i:18}D{i:19}D{i:17}D{i:11}D{i:7}D{i:1}
+D{i:20}
 }
 ##^##*/
