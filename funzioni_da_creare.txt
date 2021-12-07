@@ -1,0 +1,11 @@
+Realizzare funzione che legge dal file od_conf quante palestre ci sono e setta gli elementi del combobox con id comboBoxGym
+con i nomi delle palestre disponibili (supponiamo che il file sia già esistente)
+
+
+Una volta selezionata la palestra, vengono caricate tutte le stanze di quella palestra in un'altra combobox con id comboBoxRoom.
+
+Dopo aver selezionato la palestra e la stanza si va alla pagina di configurazione di quella stanza
+
+
+Successivamente, è necessario creare il file od_conf inserendo tutti i campi richiesti e creando il file od_conf.json da salvare in memoria
+(successivamente sarebbe da memorizzare in un database)

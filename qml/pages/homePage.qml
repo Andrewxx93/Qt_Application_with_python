@@ -228,10 +228,9 @@ Item {
                         id: comboBox
                         Layout.preferredWidth: 300
                         Layout.fillWidth: true
-                        model: ["First","Second","Third"]
-                        //displayText: comboBox.currentText
+                        //model: ["First","Second","Third"]
 
-                        currentIndex: 0
+                        currentIndex: -1
 
                     }
 
@@ -270,6 +269,10 @@ Item {
 
         function onSetGymName(value){
             labelGymName.text = value
+        }
+
+        function onSetModel(list){
+            comboBox.model = list
         }
 
 

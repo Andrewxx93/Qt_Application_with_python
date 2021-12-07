@@ -39,6 +39,9 @@ class MainWindow(QObject):
     # Signal set Gym name
     setGymName = Signal(str)
 
+     # Signal set Model in combobox
+    setModel = Signal(list)
+
     # Text String
     textField = ""
 
@@ -92,7 +95,15 @@ class MainWindow(QObject):
         print(f"Gym name: {gymName}")
         print(f"Room1 name: {roomName1}")
         print(f"Room2 name: {roomName2}")
+        # print(f"Current text in combobox: {currentText}")
         self.setGymName.emit("The Gym name is: " + gymName)
+        if(gymName=='1'):
+            self.setModel.emit(["primo","secondo","terzo","quarto"])   # Con questo si possono settare dinamicamente gli elementi dentro la ComboBox
+        elif(gymName=='2'):
+            self.setModel.emit(["uno","due","tre","quattro"])   # Con questo si possono settare dinamicamente gli elementi dentro la ComboBox
+
+
+    
 
 
 if __name__ == "__main__":
