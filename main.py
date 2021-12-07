@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import sys
 import datetime
+import json
 
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
@@ -90,9 +91,10 @@ class MainWindow(QObject):
         else:
             self.setName.emit("Welcome")
 
-    @Slot(str, str, str)
-    def jsonCreator(self, gymName, roomName1, roomName2):
+    @Slot(str, str, str,int)
+    def jsonCreator(self, gymName, roomName1, roomName2,gymLength):
         print(f"Gym name: {gymName}")
+        print(f"Gym name: {gymLength}")
         print(f"Room1 name: {roomName1}")
         print(f"Room2 name: {roomName2}")
         # print(f"Current text in combobox: {currentText}")
@@ -101,6 +103,24 @@ class MainWindow(QObject):
             self.setModel.emit(["primo","secondo","terzo","quarto"])   # Con questo si possono settare dinamicamente gli elementi dentro la ComboBox
         elif(gymName=='2'):
             self.setModel.emit(["uno","due","tre","quattro"])   # Con questo si possono settare dinamicamente gli elementi dentro la ComboBox
+        else:
+            self.setModel.emit([])
+    
+        od_conf = {
+            "gym": gymName,
+            "room1": roomName1,
+            "room2": roomName2
+
+        }
+
+        self.od_conf = od_conf
+    
+    @Slot(str)
+    def jsonSave(self,value):
+        with open("od_conf.json",'w') as fp:
+            json.dump(self.od_conf,fp,indent = 4)
+        
+        print(f"File salvato {value}")
 
 
     

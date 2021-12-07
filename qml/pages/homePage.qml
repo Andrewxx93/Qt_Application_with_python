@@ -199,11 +199,17 @@ Item {
                         Layout.preferredWidth: 250
                         Layout.maximumWidth: 200
                         onClicked: {
-                            backend.jsonCreator(addGym.text, addRoom1.text,addRoom2.text)
+                            backend.jsonCreator(addGym.text, addRoom1.text,addRoom2.text,addGym.length)
 
                         }
+                        enabled: if(addGym.length === 0 || addRoom1.length === 0 || addRoom2.length ===0){
+                                     return false
+                                 }else{
+                                    return true
+                                 }
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
+
                     }
 
 
@@ -232,15 +238,25 @@ Item {
 
                         currentIndex: -1
 
+
                     }
 
                     CustomButton {
-                        id: btnSendValue1
-                        text: "Send"
+                        id: saveJSON
+                        text: "Save"
                         Layout.maximumWidth: 200
                         Layout.preferredHeight: 40
                         Layout.preferredWidth: 250
                         Layout.fillWidth: true
+                        enabled: if(comboBox.count !==0){
+                                    return true
+                                 }else{
+                                    return false
+                                 }
+
+                        onClicked: {
+                            backend.jsonSave("testo")
+                        }
                     }
                 }
             }
