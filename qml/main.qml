@@ -419,7 +419,7 @@ Window {
                                 btnSettings.isActiveMenu = false
                                 btnTextEditor.isActiveMenu = false
                                 loader_stackViewOpen.isActiveMenu = true
-                                stackView.push(Qt.resolvedUrl("pages/loader_stackView.qml"))
+                                stackView.push(Qt.resolvedUrl("pages/odConfigurationPage.qml"))
 
                             }
 
@@ -461,7 +461,7 @@ Window {
                     StackView {
                         id: stackView
                         anchors.fill: parent
-                        initialItem: Qt.resolvedUrl("pages/textEditor.qml")
+                        initialItem: Qt.resolvedUrl("pages/homePage.qml")
                     }
                 }
 

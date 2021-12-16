@@ -8,8 +8,8 @@ import json
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
-import myModel as m
-
+import myGymModelList as mg
+import myRoomModelList as mr
 
 class MainWindow(QObject):
     def __init__(self):
@@ -94,6 +94,10 @@ class MainWindow(QObject):
             self.setName.emit("Welcome, " + name)
         else:
             self.setName.emit("Welcome")
+            
+    @Slot(str)
+    def selectGym(self,gymName):
+        print(f"La palestra selezionata è:{gymName}")
 
     @Slot(str, str, str, int)
     def jsonCreator(self, gymName, roomName1, roomName2, gymLength):
@@ -136,11 +140,13 @@ if __name__ == "__main__":
 
     # model = QStringListModel()
     # model.setStringList(["hi", "ho", "hu", "hi", "ho", "hu"])
-    model = m.PersonModel()
+    gymModelList = mg.GymModelList()
+    roomModelList = mr.RoomModelList()
     # Get Context
     main = MainWindow()
     engine.rootContext().setContextProperty("backend", main)
-    engine.rootContext().setContextProperty('PersonModel', model)
+    engine.rootContext().setContextProperty('gymModelList', gymModelList)
+    engine.rootContext().setContextProperty('roomModelList', roomModelList)
 
     # Load QML file
     engine.load(os.fspath(Path(__file__).resolve().parent / "qml/main.qml"))
