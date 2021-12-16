@@ -8,12 +8,13 @@ import json
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
-from PySide2.QtWidgets import QComboBox
+import myModel as m
 
 
 class MainWindow(QObject):
     def __init__(self):
         QObject.__init__(self)
+        # self.addElementList()
 
         # QTimer - Run Timer
         self.timer = QTimer()
@@ -21,12 +22,15 @@ class MainWindow(QObject):
         self.timer.start(1000)
 
         # Base JSON for Specific Room Management
-        """ 
+        """
             creare JSON base da caricare
         """
 
     # Signal Set Name
     setName = Signal(str)
+
+    # Signal Add elem
+    addElem = Signal(dict)
 
     # Signal Set Data
     printTime = Signal(str)
@@ -40,7 +44,7 @@ class MainWindow(QObject):
     # Signal set Gym name
     setGymName = Signal(str)
 
-     # Signal set Model in combobox
+    # Signal set Model in combobox
     setModel = Signal(list)
 
     # Text String
@@ -91,21 +95,25 @@ class MainWindow(QObject):
         else:
             self.setName.emit("Welcome")
 
-    @Slot(str, str, str,int)
-    def jsonCreator(self, gymName, roomName1, roomName2,gymLength):
+    @Slot(str, str, str, int)
+    def jsonCreator(self, gymName, roomName1, roomName2, gymLength):
         print(f"Gym name: {gymName}")
         print(f"Gym name: {gymLength}")
         print(f"Room1 name: {roomName1}")
         print(f"Room2 name: {roomName2}")
         # print(f"Current text in combobox: {currentText}")
         self.setGymName.emit("The Gym name is: " + gymName)
-        if(gymName=='1'):
-            self.setModel.emit(["primo","secondo","terzo","quarto"])   # Con questo si possono settare dinamicamente gli elementi dentro la ComboBox
-        elif(gymName=='2'):
-            self.setModel.emit(["uno","due","tre","quattro"])   # Con questo si possono settare dinamicamente gli elementi dentro la ComboBox
+        if(gymName == '1'):
+            self.setModel.emit(["primo", "secondo", "terzo", "quarto"])
+            # Con questo si possono settare dinamicamente gli elementi dentro
+            # la ComboBox
+        elif(gymName == '2'):
+            self.setModel.emit(["uno", "due", "tre", "quattro"])
+            # Con questo si possono settare dinamicamente gli elementi dentro
+            # la ComboBox
         else:
             self.setModel.emit([])
-    
+
         od_conf = {
             "gym": gymName,
             "room1": roomName1,
@@ -114,27 +122,31 @@ class MainWindow(QObject):
         }
 
         self.od_conf = od_conf
-    
+
     @Slot(str)
-    def jsonSave(self,value):
-        with open("od_conf.json",'w') as fp:
-            json.dump(self.od_conf,fp,indent = 4)
-        
-        print(f"File salvato {value}")
-
-
-    
+    def jsonSave(self, value):
+        with open("od_conf.json", 'w') as fp:
+            json.dump(self.od_conf, fp, indent=4)
+            print(f"File salvato {value}")
 
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
+
+    # model = QStringListModel()
+    # model.setStringList(["hi", "ho", "hu", "hi", "ho", "hu"])
+    model = m.PersonModel()
     # Get Context
     main = MainWindow()
     engine.rootContext().setContextProperty("backend", main)
+    engine.rootContext().setContextProperty('PersonModel', model)
 
     # Load QML file
     engine.load(os.fspath(Path(__file__).resolve().parent / "qml/main.qml"))
+
+    # main.addElementList(w.rootObject())
+
     if not engine.rootObjects():
         sys.exit(-1)
     sys.exit(app.exec_())

@@ -12,7 +12,7 @@ Window {
     minimumWidth: 800
     minimumHeight: 500
     color: "#00000000"
-    title: qsTr("Course Qt Quick")
+    title: qsTr("Owner DASHBOARD")
 
     // Remove title bar
     flags: Qt.Window | Qt.FramelessWindowHint
@@ -168,6 +168,7 @@ Window {
                         anchors.leftMargin: 0
                     }
 
+
                 }
 
                 Rectangle {
@@ -204,18 +205,41 @@ Window {
                         fillMode: Image.PreserveAspectFit
                     }
 
+//                    Label {
+//                        id: labelData2
+//                        text: qsTr("Label")
+//                        color: "#55aaff"
+//                        anchors.left: label.right
+//                        anchors.right: parent.right
+//                        anchors.top: parent.top
+//                        anchors.bottom: parent.bottom
+//                        anchors.topMargin: 0
+//                        anchors.bottomMargin: 0
+//                        anchors.rightMargin: 0
+//                        anchors.leftMargin: 0
+//                        horizontalAlignment: Text.AlignHCenter
+//                        verticalAlignment: Text.AlignVCenter
+//                        font.pointSize: 12
+//                    }
+
                     Label {
                         id: label
                         color: "#c3cbdd"
-                        text: qsTr("My Application Title")
+                        text: qsTr("Owner Dashboard")
                         anchors.left: iconApp.right
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         verticalAlignment: Text.AlignVCenter
+                        anchors.rightMargin: 0
                         font.pointSize: 10
-                        anchors.leftMargin: 5
+                        anchors.leftMargin: 0
+
                     }
+
+
+
+
                 }
 
                 Row {
@@ -307,7 +331,7 @@ Window {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
                                 btnTextEditor.isActiveMenu = false
-                                btnParsingJSON.isActiveMenu = false
+                                loader_stackViewOpen.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
 
                             }
@@ -386,16 +410,16 @@ Window {
                         }
 
                         LeftMenuButton {
-                            id: btnParsingJSON
+                            id: loader_stackViewOpen
                             width: leftMenu.width
-                            text: qsTr("ParsingJSON")
+                            text: qsTr("Loader StackView open")
                             btnIconSource: "../images/svg_images/open_icon.svg"
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
                                 btnTextEditor.isActiveMenu = false
-                                btnParsingJSON.isActiveMenu = true
-                                stackView.push(Qt.resolvedUrl("pages/ParsingJSON.qml"))
+                                loader_stackViewOpen.isActiveMenu = true
+                                stackView.push(Qt.resolvedUrl("pages/loader_stackView.qml"))
 
                             }
 
@@ -617,6 +641,9 @@ Window {
             actualPage.setText = text
         }
 
+//        function onPrintTime(time){
+//            labelData2.text = time
+//        }
     }
 
 
