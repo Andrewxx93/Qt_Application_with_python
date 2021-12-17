@@ -1,0 +1,78 @@
+{
+	"palestre": [
+        {
+		"deviceID": "RFID_2",
+		"gymName": "SanDonato",
+		"roomName": "Spinning",
+		"type": "RFID",
+		"description": "in",
+		"shortDesc": "IN",
+		"topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        {
+            "deviceID": "RFID_14",
+            "gymName": "SanDonato",
+            "roomName": "Cardio",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+            },
+        {
+            "deviceID": "RFID_3",
+            "gymName": "SanSalvario",
+            "roomName": "Cardio",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        {
+            "deviceID": "RFID_1",
+            "gymName": "Crocetta",
+            "roomName": "Tapis",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        
+        {
+            "deviceID": "RFID_1",
+            "gymName": "SanDonato",
+            "roomName": "Tapis",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+            },
+            {
+                "deviceID": "RFID_10",
+                "gymName": "Crocetta",
+                "roomName": "Cardio",
+                "type": "RFID",
+                "description": "in",
+                "shortDesc": "IN",
+                "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+            },
+            {
+                "deviceID": "RFID_1",
+                "gymName": "SanDonato",
+                "roomName": "TRX",
+                "type": "RFID",
+                "description": "in",
+                "shortDesc": "IN",
+                "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+                },
+                {
+                    "deviceID": "RFID_3",
+                    "gymName": "SanSalvario",
+                    "roomName": "Ellittica",
+                    "type": "RFID",
+                    "description": "in",
+                    "shortDesc": "IN",
+                    "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+                }
+    
+    ]
+}

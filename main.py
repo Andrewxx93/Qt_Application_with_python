@@ -8,9 +8,14 @@ import json
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
+from gymLoader import *
+
 import myGymModelList as mg
 import myRoomModelList as mr
 
+app = QGuiApplication(sys.argv)
+engine = QQmlApplicationEngine()
+    
 class MainWindow(QObject):
     def __init__(self):
         QObject.__init__(self)
@@ -20,12 +25,16 @@ class MainWindow(QObject):
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.setTime())
         self.timer.start(1000)
+        
+        # Gym creation
+        gymLoader = GymLoader()
+    
+        self.gymList,self.rooms = gymLoader.loader()
+    
+        self.gymModelList = mg.GymModelList(self.gymList)
 
-        # Base JSON for Specific Room Management
-        """
-            creare JSON base da caricare
-        """
-
+        self.roomList = []
+        self.roomModelList = mr.RoomModelList(self.roomList)
     # Signal Set Name
     setName = Signal(str)
 
@@ -98,6 +107,13 @@ class MainWindow(QObject):
     @Slot(str)
     def selectGym(self,gymName):
         print(f"La palestra selezionata è:{gymName}")
+        self.roomList = []
+        if gymName in self.gymList:
+            self.roomList = self.rooms[gymName]
+            print(self.roomList)
+            self.roomModelList = mr.RoomModelList(self.roomList)
+            engine.rootContext().setContextProperty('roomModelList', self.roomModelList)
+            
 
     @Slot(str, str, str, int)
     def jsonCreator(self, gymName, roomName1, roomName2, gymLength):
@@ -135,18 +151,20 @@ class MainWindow(QObject):
 
 
 if __name__ == "__main__":
-    app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()
+    #app = QGuiApplication(sys.argv)
+    #engine = QQmlApplicationEngine()
 
-    # model = QStringListModel()
-    # model.setStringList(["hi", "ho", "hu", "hi", "ho", "hu"])
-    gymModelList = mg.GymModelList()
-    roomModelList = mr.RoomModelList()
+    
+    
+    #roomList = ["ROOM1", "ROOM2", "ROOM3","ROOM4","ROOM5","ROOM6","ROOM7","ROOM8","ROOM9"]
+    #roomModelList = mr.RoomModelList(roomList)
+    #print(roomModelList.roomList)
+    
     # Get Context
     main = MainWindow()
     engine.rootContext().setContextProperty("backend", main)
-    engine.rootContext().setContextProperty('gymModelList', gymModelList)
-    engine.rootContext().setContextProperty('roomModelList', roomModelList)
+    engine.rootContext().setContextProperty('gymModelList', main.gymModelList)
+    engine.rootContext().setContextProperty('roomModelList', main.roomModelList)
 
     # Load QML file
     engine.load(os.fspath(Path(__file__).resolve().parent / "qml/main.qml"))

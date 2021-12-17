@@ -19,7 +19,7 @@ Item {
                 radius: 10
                 Text{
                      color: "#000000"
-                     text: name + " " + id
+                     text: name
                      anchors.centerIn: parent
                 }
 
