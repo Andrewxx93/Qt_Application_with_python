@@ -14,7 +14,7 @@ Button{
     property int iconWidth: 18
     property int iconHeight: 18
     property color activeMenuColor: "#55aaff"
-    property color activeMenuColorRigth: "#2c313c"
+    //property color activeMenuColorRigth: "#2c313c"
     property bool isActiveMenu: false
 
     QtObject{
@@ -47,24 +47,25 @@ Button{
                }
 
                color: activeMenuColor
-               width: 3
+               width: 4
                visible: isActiveMenu
 
         }
 
-        Rectangle{
-               anchors{
-                    top: parent.top
-                    right: parent.right
-                    bottom: parent.bottom
+//        Rectangle{
+//               id: IDactiveMenuColorRight
+//               anchors{
+//                    top: parent.top
+//                    right: parent.right
+//                    bottom: parent.bottom
 
-               }
+//               }
 
-               color: activeMenuColorRigth
-               width: 5
-               visible: isActiveMenu
+//               color: activeMenuColorRigth
+//               width: 5
+//               visible: isActiveMenu
 
-        }
+//        }
 
 
     }
@@ -114,6 +115,6 @@ Button{
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.66;height:60;width:250}D{i:1}
+    D{i:0;autoSize:true;formeditorZoom:1.75;height:60;width:250}D{i:1}
 }
 ##^##*/

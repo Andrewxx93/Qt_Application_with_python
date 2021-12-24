@@ -7,10 +7,10 @@ import QtQuick.Dialogs 1.3
 Window {
     id: mainWindow
     width: 1000
-    height: 580
+    height: 600
     visible: true
     minimumWidth: 800
-    minimumHeight: 500
+    minimumHeight: 600
     color: "#00000000"
     title: qsTr("Owner DASHBOARD")
 
@@ -332,7 +332,7 @@ Window {
                                 btnSettings.isActiveMenu = false
                                 btnTextEditor.isActiveMenu = false
                                 loader_stackViewOpen.isActiveMenu = false
-                                stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
+                                stackView.push(Qt.resolvedUrl("pages/odConfigurationPage.qml"))
 
                             }
                         }
@@ -461,7 +461,8 @@ Window {
                     StackView {
                         id: stackView
                         anchors.fill: parent
-                        initialItem: Qt.resolvedUrl("pages/homePage.qml")
+                        initialItem: Qt.resolvedUrl("pages/odConfigurationPage.qml")
+
                     }
                 }
 

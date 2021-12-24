@@ -4,17 +4,18 @@ from pathlib import Path
 import sys
 import datetime
 import json
+import time
 
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
 from gymLoader import *
 
-import myGymModelList as mg
-import myRoomModelList as mr
+import myGymModelList as mg # model gym
+import myRoomModelList as mr # model room
+import myDeviceModelList as md # model device
 
-app = QGuiApplication(sys.argv)
-engine = QQmlApplicationEngine()
+
     
 class MainWindow(QObject):
     def __init__(self):
@@ -27,14 +28,30 @@ class MainWindow(QObject):
         self.timer.start(1000)
         
         # Gym creation
-        gymLoader = GymLoader()
-    
+        #Inserire GET request al service catalog 
+        with open("LISTfromDeviceCatalog.json") as fp:
+            getResponse= json.load(fp)
+        
+        self.deviceList = getResponse["palestre"]    
+        gymLoader = GymLoader(getResponse)
+
         self.gymList,self.rooms = gymLoader.loader()
     
         self.gymModelList = mg.GymModelList(self.gymList)
-
+        
+        
+        # All'avvio nessuna palestra è selezionata quindi non bisogna visualizzare nessuna stanza e 
+        # nessun dispositivo
         self.roomList = []
         self.roomModelList = mr.RoomModelList(self.roomList)
+        
+        self.gymName = ""
+        self.deviceModelList = md.DeviceModelList()
+        
+        
+        
+
+        
     # Signal Set Name
     setName = Signal(str)
 
@@ -58,6 +75,9 @@ class MainWindow(QObject):
 
     # Text String
     textField = ""
+    
+    def start_engine(self):
+        self.engine = QQmlApplicationEngine()
 
     # Open File
     @Slot(str)
@@ -103,17 +123,40 @@ class MainWindow(QObject):
             self.setName.emit("Welcome, " + name)
         else:
             self.setName.emit("Welcome")
-            
+
+    # This method select the gym and displays the room inside that specific gym. 
     @Slot(str)
     def selectGym(self,gymName):
-        print(f"La palestra selezionata è:{gymName}")
+        print(f"La palestra selezionata è:{gymName} ")
         self.roomList = []
         if gymName in self.gymList:
+            self.gymName = gymName
             self.roomList = self.rooms[gymName]
             print(self.roomList)
             self.roomModelList = mr.RoomModelList(self.roomList)
-            engine.rootContext().setContextProperty('roomModelList', self.roomModelList)
-            
+            self.engine.rootContext().setContextProperty('roomModelList', self.roomModelList)
+    
+    
+    # This method select the room and displays all the devices inside that specific room.   
+    @Slot(str)
+    def selectRoom(self,roomName):
+        if self.gymName in self.gymList and roomName in self.roomList:
+            print(f"Selected gym {self.gymName} room {roomName}")
+            self.deviceModelList = md.DeviceModelList(self.gymName,roomName,self.deviceList)
+            self.engine.rootContext().setContextProperty('deviceModelList', self.deviceModelList)
+    
+    @Slot(str)
+    def addNewGym(self,gymName):
+        self.gymModelList.changeStatus("closed", 1)
+        self.gymModelList.changeStatus("problems", 0)
+        print(f"Add new Gym: {gymName}")
+        self.gymName = gymName
+        self.roomList = []
+        self.roomModelList = mr.RoomModelList(self.roomList)
+        self.engine.rootContext().setContextProperty('roomModelList', self.roomModelList)
+        # Ricordati di ricaricare self.engine.rootContext().setContextProperty("gymModelList",self.gymModelList)
+        #In questo caso bisogna aggiornare la lista ritornata dal Device Catalog andando a chiedere di aggiornare la palestra e le stanze che ci sono
+    
 
     @Slot(str, str, str, int)
     def jsonCreator(self, gymName, roomName1, roomName2, gymLength):
@@ -151,26 +194,26 @@ class MainWindow(QObject):
 
 
 if __name__ == "__main__":
-    #app = QGuiApplication(sys.argv)
-    #engine = QQmlApplicationEngine()
-
-    
-    
-    #roomList = ["ROOM1", "ROOM2", "ROOM3","ROOM4","ROOM5","ROOM6","ROOM7","ROOM8","ROOM9"]
-    #roomModelList = mr.RoomModelList(roomList)
-    #print(roomModelList.roomList)
+    app = QGuiApplication(sys.argv)
     
     # Get Context
     main = MainWindow()
-    engine.rootContext().setContextProperty("backend", main)
-    engine.rootContext().setContextProperty('gymModelList', main.gymModelList)
-    engine.rootContext().setContextProperty('roomModelList', main.roomModelList)
+    main.start_engine()
+    
+    # Set Context
+    main.engine.rootContext().setContextProperty("backend", main)
+    main.engine.rootContext().setContextProperty('gymModelList', main.gymModelList)
+    main.engine.rootContext().setContextProperty('roomModelList', main.roomModelList)
+    main.engine.rootContext().setContextProperty('deviceModelList', main.deviceModelList)
 
+    gymCount = main.gymModelList.rowCount()
+    
     # Load QML file
-    engine.load(os.fspath(Path(__file__).resolve().parent / "qml/main.qml"))
+    main.engine.load(os.fspath(Path(__file__).resolve().parent / "qml/main.qml"))
 
-    # main.addElementList(w.rootObject())
+    
+    
 
-    if not engine.rootObjects():
+    if not main.engine.rootObjects():
         sys.exit(-1)
     sys.exit(app.exec_())

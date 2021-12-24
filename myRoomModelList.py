@@ -12,17 +12,11 @@ class RoomModelList(QAbstractListModel):
         super().__init__(parent)
         # Sostituire con lettura da file per leggere tutte le palestre presenti.
         #Definire gli stati della palestra e capire a chi bisogna chiedere
-        self.rooms = roomList
-        # self.rooms = [
-        #     {"name": "room1", "id": 1234,"status": "Fulloperative"},
-        #     {"name": "room2", "id": 1234,"status": "Fulloperative"},
-        #     {"name": "room3", "id": 1234,"status": "Fulloperative"},
-        #     {"name": "room4", "id": 1234,"status": "Fulloperative"},
-        #     {"name": "room5", "id": 1234,"status": "Fulloperative"},
-        #     {"name": "room6", "id": 1234,"status": "Fulloperative"},
-            
-            
-        #     ]
+        self.rooms = []
+        for room in roomList:
+            self.rooms.append(dict(name = room,status = "fulloperative"))
+        self.rooms.append(dict(name="+",status = "addRoom"))
+        # self.rooms = [  {"name": "room1", "id": 1234,"status": "Fulloperative"} ]
             
     def data(self, index, role=Qt.DisplayRole):
         row = index.row()
@@ -41,9 +35,14 @@ class RoomModelList(QAbstractListModel):
         }
         
         
-    #Bisogna aggiungere lo stato della palestra. A chi bisogra chiedere ? EntryControl ???
+    #Bisogna aggiungere lo stato della stanza. A chi bisogra chiedere ? EntryControl ???
     @Slot(str)
     def addRoom(self,name):
         self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-        self.rooms.append({"name":name})
+        self.rooms.append({"name":name,"status": "fulloperative"})
         self.endInsertRows()
+        
+    def changeStatus(self,status,row):
+        ix = self.index(row,0)
+        self.rooms[row]["status"] = status
+        self.dataChanged.emit(ix,ix,self.roleNames())

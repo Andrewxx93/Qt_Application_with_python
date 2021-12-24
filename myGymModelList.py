@@ -11,8 +11,10 @@ class GymModelList(QAbstractListModel):
         # Sostituire con lettura da file per leggere tutte le palestre presenti.
         #Definire gli stati della palestra e capire a chi bisogna chiedere
         self.gyms =[]
+        
         for gym in gymList:
             self.gyms.append(dict( name = gym, status="fulloperative"))
+        self.gyms.append(dict(name="+",status = "addGym"))
         
     def data(self, index, role=Qt.DisplayRole):
         row = index.row()
@@ -20,6 +22,7 @@ class GymModelList(QAbstractListModel):
             return self.gyms[row]["name"]
         if role == GymModelList.StatusRole:
             return self.gyms[row]["status"]
+ 
             
     def rowCount(self,parent=QModelIndex()):
         return len(self.gyms)
@@ -27,13 +30,21 @@ class GymModelList(QAbstractListModel):
     def roleNames(self):
         return{
             GymModelList.NameRole: b'name',
-            GymModelList.StatusRole: b'status'
+            GymModelList.StatusRole: b'status',
+            
         }
-        
-        
+    
+            
+    
     #Bisogna aggiungere lo stato della palestra. A chi bisogra chiedere ? EntryControl ???
     @Slot(str)
     def addGym(self,name):
         self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-        self.gyms.append({"name":name})
+        self.gyms.append({"name":name,"status": "problems"})
         self.endInsertRows()
+        
+    def changeStatus(self,status,row):
+        ix = self.index(row,0)
+        self.gyms[row]["status"] = status
+        self.dataChanged.emit(ix,ix,self.roleNames())
+        

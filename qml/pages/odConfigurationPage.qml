@@ -20,7 +20,7 @@ Rectangle {
 
     Rectangle {
         id: gymsLoaderContainer
-        height: parent.height/2
+        height: 150
         color: "#00ffffff"
         anchors.left: parent.left
         anchors.right: parent.right
@@ -36,9 +36,10 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
+            horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
             anchors.rightMargin: 0
-            anchors.leftMargin: 0
+            anchors.leftMargin: 20
             anchors.topMargin: 0
             color: "#ffffff"
             font.pointSize: 12
@@ -53,7 +54,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             source: "gyms.qml"
             anchors.rightMargin: 0
-            anchors.leftMargin: 0
+            anchors.leftMargin: 20
             anchors.bottomMargin: 0
             anchors.topMargin: 0
         }
@@ -62,13 +63,17 @@ Rectangle {
 
     Rectangle {
         id: roomsLoaderContainer
-        height: parent.height/2
+        height: 150
         color: "#00ffffff"
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: gymsLoaderContainer.bottom
-        anchors.bottom: parent.bottom
+
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
+        anchors.topMargin: 0
         anchors.bottomMargin: 0
+
 
         Label {
             id: labelRooms
@@ -78,8 +83,9 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
+            horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
-            anchors.leftMargin: 0
+            anchors.leftMargin: 20
             anchors.rightMargin: 0
             anchors.topMargin: 0
             font.pointSize: 12
@@ -94,13 +100,53 @@ Rectangle {
             anchors.bottom: parent.bottom
             source: "rooms.qml"
             anchors.bottomMargin: 0
-            anchors.leftMargin: 0
+            anchors.leftMargin: 20
             anchors.rightMargin: 0
             anchors.topMargin: 0
         }
+
+    }
+
+    Rectangle {
+        id: devicesLoaderContainer
+        height: 150
+        color: "#00ffffff"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: roomsLoaderContainer.bottom
         anchors.leftMargin: 0
-        anchors.topMargin: 0
         anchors.rightMargin: 0
+        anchors.topMargin: 0
+        Label {
+            id: labelDevices
+            height: 40
+            color: "#ffffff"
+            text: qsTr("DEVICES")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            horizontalAlignment: Text.AlignLeft
+            verticalAlignment: Text.AlignVCenter
+            anchors.leftMargin: 20
+            anchors.topMargin: 0
+            anchors.rightMargin: 0
+            font.pointSize: 12
+        }
+
+        Loader {
+            id: devicesLoader
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: labelDevices.bottom
+            anchors.bottom: parent.bottom
+            source: "devices.qml"
+            anchors.bottomMargin: 0
+            clip: true
+            anchors.leftMargin: 20
+            anchors.topMargin: 0
+            anchors.rightMargin: 0
+        }
+
     }
 
 
@@ -111,6 +157,6 @@ Rectangle {
 /*##^##
 Designer {
     D{i:0;autoSize:true;formeditorZoom:0.9;height:480;width:640}D{i:2}D{i:3}D{i:1}D{i:5}
-D{i:6}D{i:4}
+D{i:6}D{i:4}D{i:8}D{i:9}D{i:7}
 }
 ##^##*/

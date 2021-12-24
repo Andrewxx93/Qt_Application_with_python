@@ -4,19 +4,22 @@ import QtQuick.Layouts 1.15
 
 
 Item {
+
     GridView{
         id: gridView
         anchors.fill: parent
+
+        clip: true
         model: gymModelList
-        cellHeight: 150
-        cellWidth: width/4
+        cellHeight: 120
+        cellWidth: 120
         delegate: RowLayout{
             id: layout
             Rectangle{
-
-                width: 120
-                height: 120
-                color: "white"
+                id: gymRectangle
+                property var gymStatus: status
+                width: 100
+                height: 100
                 radius: 10
 
                 Text{
@@ -24,19 +27,53 @@ Item {
                      property var gymName: name
                      color: "#000000"
                      text: name
+                     font.bold: true
+                     font.pointSize: 10
 
                      anchors.centerIn: parent
                 }
 
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {
-                        parent.color = 'red'
-                        backend.selectGym(gym.gymName)
+                    onClicked:{
+                        selectBackendOperation(gym.gymName)
+                        if(gym.gymName ==="+"){
+                            popup.open()
+                        }
                     }
                 }
 
+                Popup {
+                       id: popup
+                       x: 100
+                       y: 100
+                       width: 200
+                       height: 300
+                       modal: true
+                       focus: true
+                       closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+                       contentItem: Text {
+                           id: popupText
+                           text: qsTr("text")
+                       }
+                   }
+
+
+
+                QtObject{
+                    property var statusColor: if(gymRectangle.gymStatus === "fulloperative"){
+                                                gymRectangle.color = "green"
+                                              }
+                                              else if(gymRectangle.gymStatus === "closed"){
+                                                gymRectangle.color = "gray"
+                                              }
+                                              else if(gymRectangle.gymStatus === "problems"){
+                                                gymRectangle.color = "orange"
+                                              }
+                }
+
             }
+
         }
 
         populate: Transition {
@@ -44,6 +81,17 @@ Item {
             }
 
     }
+
+    function selectBackendOperation(gymName){
+            if(gymName === '+'){
+                   backend.addNewGym(gymName)
+            }else{
+                   backend.selectGym(gymName)
+
+
+            }
+    }
+
 
 }
 

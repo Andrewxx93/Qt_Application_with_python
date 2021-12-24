@@ -17,11 +17,57 @@
             "description": "in",
             "shortDesc": "IN",
             "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
-            },
+        },
+        {
+            "deviceID": "RFID_14",
+            "gymName": "SanDonato",
+            "roomName": "Pippo",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        {
+            "deviceID": "RFID_14124134",
+            "gymName": "SanDonato",
+            "roomName": "Pippo",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        {
+            "deviceID": "RFID_15124",
+            "gymName": "SanDonato",
+            "roomName": "Pippo",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        {
+            "deviceID": "RFID_14",
+            "gymName": "SanDonato",
+            "roomName": "Pluto",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+                
         {
             "deviceID": "RFID_3",
             "gymName": "SanSalvario",
             "roomName": "Cardio",
+            "type": "RFID",
+            "description": "in",
+            "shortDesc": "IN",
+            "topic": "iotproj/SanDonato/Spinning/porta/sensore/RFIDreader"
+        },
+        {
+            "deviceID": "RFID_124124",
+            "gymName": "SanSalvario",
+            "roomName": "HIIT",
             "type": "RFID",
             "description": "in",
             "shortDesc": "IN",
