@@ -330,8 +330,8 @@ Window {
                             onClicked: {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
-                                btnTextEditor.isActiveMenu = false
-                                loader_stackViewOpen.isActiveMenu = false
+
+                                machineControl.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/odConfigurationPage.qml"))
 
                             }
@@ -393,33 +393,19 @@ Window {
 
                         }
 
-                        LeftMenuButton {
-                            id: btnTextEditor
-                            width: leftMenu.width
-                            text: qsTr("Text Edit")
-                            btnIconSource: "../images/svg_images/text_editor_icon.svg"
-                            onClicked: {
-                                btnHome.isActiveMenu = false
-                                btnSettings.isActiveMenu = false
 
-                                btnTextEditor.isActiveMenu = true
-                                stackView.push(Qt.resolvedUrl("pages/textEditor.qml"))
-                            }
-
-
-                        }
 
                         LeftMenuButton {
-                            id: loader_stackViewOpen
+                            id: machineControl
                             width: leftMenu.width
-                            text: qsTr("Loader StackView open")
+                            text: qsTr("Machine Control Configuration")
                             btnIconSource: "../images/svg_images/open_icon.svg"
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
-                                btnTextEditor.isActiveMenu = false
-                                loader_stackViewOpen.isActiveMenu = true
-                                stackView.push(Qt.resolvedUrl("pages/odConfigurationPage.qml"))
+
+                                machineControl.isActiveMenu = true
+                                stackView.push(Qt.resolvedUrl("pages/machineControlConfiguration.qml"))
 
                             }
 
@@ -437,7 +423,7 @@ Window {
                         btnIconSource: "../images/svg_images/settings_icon.svg"
                         onClicked: {
                             btnHome.isActiveMenu = false
-                            btnTextEditor.isActiveMenu = false
+
                             btnSettings.isActiveMenu = true
                             stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
 
@@ -461,6 +447,7 @@ Window {
                     StackView {
                         id: stackView
                         anchors.fill: parent
+
                         initialItem: Qt.resolvedUrl("pages/odConfigurationPage.qml")
 
                     }
@@ -606,8 +593,8 @@ Window {
         DragHandler{
             target: null
             onActiveChanged: if(active){
-                                 mainWindow.startSystemResize(Qt.BottomEdge)
-                             }
+                mainWindow.startSystemResize(Qt.BottomEdge)
+            }
 
         }
     }
@@ -629,8 +616,8 @@ Window {
         DragHandler{
             target: null
             onActiveChanged: if(active){
-                                 mainWindow.startSystemResize(Qt.TopEdge)
-                             }
+                mainWindow.startSystemResize(Qt.TopEdge)
+            }
 
         }
     }
@@ -641,6 +628,7 @@ Window {
         function onReadText(text){
             actualPage.setText = text
         }
+
 
 //        function onPrintTime(time){
 //            labelData2.text = time

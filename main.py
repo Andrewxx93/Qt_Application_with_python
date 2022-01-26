@@ -5,53 +5,35 @@ import sys
 import datetime
 import json
 import time
+import threading
 
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
-from gymLoader import *
-
-import myGymModelList as mg # model gym
-import myRoomModelList as mr # model room
-import myDeviceModelList as md # model device
 
 
-    
 class MainWindow(QObject):
     def __init__(self):
         QObject.__init__(self)
-        # self.addElementList()
+        
 
         # QTimer - Run Timer
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.setTime())
         self.timer.start(1000)
         
-        # Gym creation
-        #Inserire GET request al service catalog 
-        with open("LISTfromDeviceCatalog.json") as fp:
-            getResponse= json.load(fp)
         
-        self.deviceList = getResponse["palestre"]    
-        gymLoader = GymLoader(getResponse)
-
-        self.gymList,self.rooms = gymLoader.loader()
+        self.l1 = [{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"}]
+        self.l2 = [{"name":"spinnig","status":"blue"},{"name":"Cardio","status":"red"}]
+        self.l3 = [{"type": "RFID","status":"green","shorDesc":"IN","description":"ingresso principale","idx":None}]
+        self.dataStructure = {'San Donato': {'Spinning': {'TV_1': {'type': 'TV', 'status': 0, 'idx': None, 'description': 'TV ingresso sinistra', 'shortDesc': 'TV SX'}, 'TV_2': {'type': 'TV', 'status': 0, 'idx': None, 'description': 'TV in fondo a destra', 'shortDesc': 'TV DX'}, 'Light_1': {'type': 'Light', 'status': 0, 'idx': None, 'description': 'Linea luci principale', 'shortDesc': 'Luci Princ'}, 'Light_2': {'type': 'Light', 'status': 0, 'idx': None, 'description': 'Linea luci emergenza', 'shortDesc': 'Luci Eme'}, 'Audio_1': {'type': 'Audio', 'status': 0, 'idx': None, 'description': 'Sistema audio principale', 'shortDesc': 'Audio1'}, 'Video_1': {'type': 'Video', 'status': 0, 'idx': None, 'description': 'Sistema video principale', 'shortDesc': 'Video1'}, 'Spinbike_1': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 1', 'shortDesc': 'Spin1'}, 'Spinbike_2': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 2', 'shortDesc': 'Spin2'}, 'Spinbike_3': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 3', 'shortDesc': 'Spin3'}, 'Spinbike_4': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 4', 'shortDesc': 'Spin4'}, 'RFID_1': {'type': 'RFID', 'status': 0, 'idx': None, 'description': 'out', 'shortDesc': 'OUT'}, 'RFID_2': {'type': 'RFID', 'status': 0, 'idx': None, 'description': 'in', 'shortDesc': 'IN'}}}}
+        
+    # Ale signals
     
-        self.gymModelList = mg.GymModelList(self.gymList)
-        
-        
-        # All'avvio nessuna palestra è selezionata quindi non bisogna visualizzare nessuna stanza e 
-        # nessun dispositivo
-        self.roomList = []
-        self.roomModelList = mr.RoomModelList(self.roomList)
-        
-        self.gymName = ""
-        self.deviceModelList = md.DeviceModelList()
-        
-        
-        
-
-        
+    gymSig = Signal(list)
+    roomSig = Signal(list)
+    deviceSig = Signal(list)
+    
     # Signal Set Name
     setName = Signal(str)
 
@@ -112,7 +94,7 @@ class MainWindow(QObject):
     def setTime(self):
         now = datetime.datetime.now()
         formatDate = now.strftime("Now is %H:%M:%S of %Y/%m/%d")
-        print(formatDate)
+        #print(formatDate)
         self.printTime.emit(formatDate)
 
     # Function Set Name To Label
@@ -123,40 +105,28 @@ class MainWindow(QObject):
             self.setName.emit("Welcome, " + name)
         else:
             self.setName.emit("Welcome")
-
-    # This method select the gym and displays the room inside that specific gym. 
+    
     @Slot(str)
     def selectGym(self,gymName):
-        print(f"La palestra selezionata è:{gymName} ")
-        self.roomList = []
-        if gymName in self.gymList:
-            self.gymName = gymName
-            self.roomList = self.rooms[gymName]
-            print(self.roomList)
-            self.roomModelList = mr.RoomModelList(self.roomList)
-            self.engine.rootContext().setContextProperty('roomModelList', self.roomModelList)
+        print(gymName)
+        
+    @Slot()
+    def loadGymsStartup(self):
+        gymList = list(self.l1)
+        self.gymSig.emit(gymList)
     
     
-    # This method select the room and displays all the devices inside that specific room.   
-    @Slot(str)
-    def selectRoom(self,roomName):
-        if self.gymName in self.gymList and roomName in self.roomList:
-            print(f"Selected gym {self.gymName} room {roomName}")
-            self.deviceModelList = md.DeviceModelList(self.gymName,roomName,self.deviceList)
-            self.engine.rootContext().setContextProperty('deviceModelList', self.deviceModelList)
-    
-    @Slot(str)
-    def addNewGym(self,gymName):
-        self.gymModelList.changeStatus("closed", 1)
-        self.gymModelList.changeStatus("problems", 0)
-        print(f"Add new Gym: {gymName}")
-        self.gymName = gymName
-        self.roomList = []
-        self.roomModelList = mr.RoomModelList(self.roomList)
-        self.engine.rootContext().setContextProperty('roomModelList', self.roomModelList)
-        # Ricordati di ricaricare self.engine.rootContext().setContextProperty("gymModelList",self.gymModelList)
-        #In questo caso bisogna aggiornare la lista ritornata dal Device Catalog andando a chiedere di aggiornare la palestra e le stanze che ci sono
-    
+    @Slot(str,str)
+    def retrieveData(self,gymName,roomName):
+        if roomName == 'None':
+            #roomList = list(self.dataStructure[gymName].keys())
+            roomList = self.l2
+            self.roomSig.emit(roomList)
+        else:
+            #deviceList = list(self.dataStructure[gymName][roomName].keys())
+            deviceList = self.l3
+            print(deviceList)
+            self.deviceSig.emit(deviceList)
 
     @Slot(str, str, str, int)
     def jsonCreator(self, gymName, roomName1, roomName2, gymLength):
@@ -195,25 +165,22 @@ class MainWindow(QObject):
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
-    
+    app.setOrganizationName('pythonProj')
+    app.setOrganizationDomain('OD')
     # Get Context
     main = MainWindow()
     main.start_engine()
-    
-    # Set Context
-    main.engine.rootContext().setContextProperty("backend", main)
-    main.engine.rootContext().setContextProperty('gymModelList', main.gymModelList)
-    main.engine.rootContext().setContextProperty('roomModelList', main.roomModelList)
-    main.engine.rootContext().setContextProperty('deviceModelList', main.deviceModelList)
 
-    gymCount = main.gymModelList.rowCount()
+    # Set Context
+
+    main.engine.rootContext().setContextProperty("backend", main)
     
     # Load QML file
     main.engine.load(os.fspath(Path(__file__).resolve().parent / "qml/main.qml"))
-
     
     
-
     if not main.engine.rootObjects():
         sys.exit(-1)
+    
     sys.exit(app.exec_())
+    
