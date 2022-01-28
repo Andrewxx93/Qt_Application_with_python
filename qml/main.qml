@@ -205,22 +205,22 @@ Window {
                         fillMode: Image.PreserveAspectFit
                     }
 
-//                    Label {
-//                        id: labelData2
-//                        text: qsTr("Label")
-//                        color: "#55aaff"
-//                        anchors.left: label.right
-//                        anchors.right: parent.right
-//                        anchors.top: parent.top
-//                        anchors.bottom: parent.bottom
-//                        anchors.topMargin: 0
-//                        anchors.bottomMargin: 0
-//                        anchors.rightMargin: 0
-//                        anchors.leftMargin: 0
-//                        horizontalAlignment: Text.AlignHCenter
-//                        verticalAlignment: Text.AlignVCenter
-//                        font.pointSize: 12
-//                    }
+                    //                    Label {
+                    //                        id: labelData2
+                    //                        text: qsTr("Label")
+                    //                        color: "#55aaff"
+                    //                        anchors.left: label.right
+                    //                        anchors.right: parent.right
+                    //                        anchors.top: parent.top
+                    //                        anchors.bottom: parent.bottom
+                    //                        anchors.topMargin: 0
+                    //                        anchors.bottomMargin: 0
+                    //                        anchors.rightMargin: 0
+                    //                        anchors.leftMargin: 0
+                    //                        horizontalAlignment: Text.AlignHCenter
+                    //                        verticalAlignment: Text.AlignVCenter
+                    //                        font.pointSize: 12
+                    //                    }
 
                     Label {
                         id: label
@@ -465,21 +465,34 @@ Window {
                     anchors.bottomMargin: 0
                     anchors.topMargin: 0
 
+
+
+                    Rectangle {
+                        id: deviceConnectorStatus
+                        color: "#ffffff"
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        anchors.leftMargin: 10
+                        anchors.bottomMargin: 5
+                        anchors.topMargin: 5
+                        width :15
+                    }
                     Label {
                         id: labelBottomInfo
                         color: "#5f6a82"
-                        text: qsTr("Application Description")
-                        anchors.left: parent.left
+                        text: qsTr("Device connector Status here")
+                        anchors.left: deviceConnectorStatus.right
                         anchors.right: parent.right
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
+                        horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
                         anchors.rightMargin: 30
                         anchors.bottomMargin: 0
                         anchors.topMargin: 0
                         anchors.leftMargin: 10
                     }
-
                     MouseArea {
                         id: resizeWindow
                         x: 894
@@ -593,8 +606,8 @@ Window {
         DragHandler{
             target: null
             onActiveChanged: if(active){
-                mainWindow.startSystemResize(Qt.BottomEdge)
-            }
+                                 mainWindow.startSystemResize(Qt.BottomEdge)
+                             }
 
         }
     }
@@ -616,8 +629,8 @@ Window {
         DragHandler{
             target: null
             onActiveChanged: if(active){
-                mainWindow.startSystemResize(Qt.TopEdge)
-            }
+                                 mainWindow.startSystemResize(Qt.TopEdge)
+                             }
 
         }
     }
@@ -630,9 +643,9 @@ Window {
         }
 
 
-//        function onPrintTime(time){
-//            labelData2.text = time
-//        }
+        //        function onPrintTime(time){
+        //            labelData2.text = time
+        //        }
     }
 
 
@@ -645,7 +658,7 @@ Window {
 Designer {
     D{i:0;formeditorZoom:0.75}D{i:1}D{i:5}D{i:7}D{i:8}D{i:6}D{i:10}D{i:11}D{i:12}D{i:9}
 D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}D{i:23}D{i:22}D{i:25}D{i:24}D{i:26}
-D{i:27}D{i:20}D{i:28}D{i:18}D{i:30}D{i:29}D{i:32}D{i:34}D{i:35}D{i:33}D{i:31}D{i:17}
+D{i:20}D{i:27}D{i:18}D{i:29}D{i:28}D{i:31}D{i:32}D{i:34}D{i:35}D{i:33}D{i:30}D{i:17}
 D{i:3}D{i:2}D{i:36}D{i:38}D{i:37}D{i:40}D{i:39}D{i:42}D{i:41}D{i:44}D{i:43}D{i:45}
 }
 ##^##*/

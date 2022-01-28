@@ -9,6 +9,7 @@ ComboBox{
     property color colorOnFocus: "#242831"
     property color colorMouseOver: "#2b2f38"
 
+
     QtObject{
         id: internal
 
@@ -20,17 +21,19 @@ ComboBox{
                                    }
     }
 
-    delegate: ItemDelegate {
-            width: comboBox.width
-            contentItem: Text {
-                text: modelData
-                color: "#ffffff"
-                font: comboBox.font
-                elide: Text.ElideRight
-                verticalAlignment: Text.AlignVCenter
-            }
+//    delegate: ItemDelegate {
+//            width: comboBox.width
 
-        }
+//            contentItem: Text {
+//                text : model.name
+//                color: comboBox.color
+//                font: comboBox.font
+//                elide: Text.ElideRight
+//                verticalAlignment: Text.AlignVCenter
+//            }
+
+
+//        }
 
     indicator: Canvas {
             id: canvas
@@ -51,7 +54,7 @@ ComboBox{
                 context.lineTo(width, 0);
                 context.lineTo(width / 2, height);
                 context.closePath();
-                context.fillStyle = comboBox.pressed ? "#ffffff" : "#81848c";
+                context.fillStyle = comboBox.pressed ? "00ff00" : "#81848c";//#81848c
                 context.fill();
             }
         }
@@ -71,7 +74,8 @@ ComboBox{
            implicitWidth: 120
            implicitHeight: 40
            color: internal.dynamicColor
-           border.color: comboBox.pressed ? "#81848c" : colorDefault
+
+           border.color: comboBox.pressed ? "#81848c" : colorDefault  //#81848c
            border.width: comboBox.visualFocus ? 2 : 1
            radius: 2
        }
@@ -93,25 +97,13 @@ ComboBox{
                }
 
                background: Rectangle {
-                   color: "#495163"
+                   color: "#81848c"
                    border.color: "#495163"
                    radius: 2
+
+
                }
            }
-
-
-
-
-
-
-
-
-//    implicitWidth: 300
-//    implicitHeight: 40
-//    background: Rectangle{
-//        color: internal.dynamicColor
-//        radius: 10
-//    }
 
 
 

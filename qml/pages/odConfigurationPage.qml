@@ -27,33 +27,7 @@ Rectangle {
 
 
 
-    Connections{
-        target: backend
 
-
-        function onGymSig(gymList){
-            gymModelList.clear()
-            roomModelList.clear()
-
-            gymModelList.append(gymList)
-
-        }
-
-        function onRoomSig(roomList){
-            roomModelList.clear()
-            deviceModelList.clear()
-            console.log(roomList)
-            roomModelList.append(roomList)
-        }
-
-        function onDeviceSig(deviceList){
-            console.log(deviceList)
-            deviceModelList.clear()
-            deviceModelList.append(deviceList)
-        }
-
-
-    }
 
     Rectangle {
         id: gymsContainer
@@ -143,6 +117,8 @@ Rectangle {
 
 
 
+
+
                         MouseArea {
                             id: gymMouseArea
                             anchors.fill: parent
@@ -155,17 +131,18 @@ Rectangle {
 
                         }
 
-                                                    QtObject{
-                                                        id: internalGym
-                                                        property color gymColorStatus: if(gymMouseArea.pressed){
-                                                                                           gymRectModel.border.color = "white"
-                                                                                       }
-                                                                                       else{
-                                                                                           gymRectModel.border.color = status
-                                                                                       }
+                        QtObject{
+                            id: internalGym
+                            property color gymColorStatus: if(gymMouseArea.pressed){
+                                                                gymRectModel.border.color = "white"
+                                                               console.log()
+                                                           }
+                                                            else{
+                                                                 gymRectModel.border.color = status
+                                                           }
 
 
-                                                    }
+                                 }
 
 
 
@@ -466,7 +443,33 @@ Rectangle {
     }
 
 
+    Connections{
+        target: backend
 
+
+        function onGymSig(gymList){
+            gymModelList.clear()
+            roomModelList.clear()
+
+            gymModelList.append(gymList)
+
+        }
+
+        function onRoomSig(roomList){
+            roomModelList.clear()
+            deviceModelList.clear()
+            console.log(roomList)
+            roomModelList.append(roomList)
+        }
+
+        function onDeviceSig(deviceList){
+            console.log(deviceList)
+            deviceModelList.clear()
+            deviceModelList.append(deviceList)
+        }
+
+
+    }
 
 
 }
@@ -474,7 +477,8 @@ Rectangle {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.9;height:480;width:640}D{i:1}D{i:3}D{i:5}D{i:6}
-D{i:11}D{i:4}D{i:2}D{i:18}D{i:20}D{i:21}D{i:26}D{i:19}D{i:17}D{i:33}D{i:34}D{i:32}
+    D{i:0;autoSize:true;formeditorZoom:0.9;height:480;width:640}D{i:2}D{i:4}D{i:5}D{i:10}
+D{i:3}D{i:1}D{i:17}D{i:19}D{i:20}D{i:25}D{i:18}D{i:16}D{i:32}D{i:34}D{i:35}D{i:40}
+D{i:33}D{i:31}D{i:46}
 }
 ##^##*/

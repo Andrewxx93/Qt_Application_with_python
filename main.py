@@ -23,8 +23,9 @@ class MainWindow(QObject):
         self.timer.start(1000)
         
         
-        self.l1 = [{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"}]
+        self.l1 = [{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"},{"name":"San Donato","status":"green"},{"name":"San Salvario","status":"green"}]
         self.l2 = [{"name":"spinnig","status":"blue"},{"name":"Cardio","status":"red"}]
+        self.l2_bis = [{"name":"HIIT","status":"blue"},{"name":"Cavolo","status":"red"}]
         self.l3 = [{"type": "RFID","status":"green","shorDesc":"IN","description":"ingresso principale","idx":None}]
         self.dataStructure = {'San Donato': {'Spinning': {'TV_1': {'type': 'TV', 'status': 0, 'idx': None, 'description': 'TV ingresso sinistra', 'shortDesc': 'TV SX'}, 'TV_2': {'type': 'TV', 'status': 0, 'idx': None, 'description': 'TV in fondo a destra', 'shortDesc': 'TV DX'}, 'Light_1': {'type': 'Light', 'status': 0, 'idx': None, 'description': 'Linea luci principale', 'shortDesc': 'Luci Princ'}, 'Light_2': {'type': 'Light', 'status': 0, 'idx': None, 'description': 'Linea luci emergenza', 'shortDesc': 'Luci Eme'}, 'Audio_1': {'type': 'Audio', 'status': 0, 'idx': None, 'description': 'Sistema audio principale', 'shortDesc': 'Audio1'}, 'Video_1': {'type': 'Video', 'status': 0, 'idx': None, 'description': 'Sistema video principale', 'shortDesc': 'Video1'}, 'Spinbike_1': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 1', 'shortDesc': 'Spin1'}, 'Spinbike_2': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 2', 'shortDesc': 'Spin2'}, 'Spinbike_3': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 3', 'shortDesc': 'Spin3'}, 'Spinbike_4': {'type': 'Spinbike', 'status': 0, 'idx': None, 'description': 'Spinbike number 4', 'shortDesc': 'Spin4'}, 'RFID_1': {'type': 'RFID', 'status': 0, 'idx': None, 'description': 'out', 'shortDesc': 'OUT'}, 'RFID_2': {'type': 'RFID', 'status': 0, 'idx': None, 'description': 'in', 'shortDesc': 'IN'}}}}
         
@@ -120,7 +121,10 @@ class MainWindow(QObject):
     def retrieveData(self,gymName,roomName):
         if roomName == 'None':
             #roomList = list(self.dataStructure[gymName].keys())
-            roomList = self.l2
+            if gymName == "San Donato":
+                roomList = self.l2
+            else:
+                roomList = self.l2_bis
             self.roomSig.emit(roomList)
         else:
             #deviceList = list(self.dataStructure[gymName][roomName].keys())
