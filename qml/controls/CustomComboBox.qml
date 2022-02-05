@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.0
 
 
 ComboBox{
@@ -71,8 +72,9 @@ ComboBox{
        }
 
        background: Rectangle {
-           implicitWidth: 120
-           implicitHeight: 40
+//           implicitWidth: 120
+//           implicitHeight: 40
+
            color: internal.dynamicColor
 
            border.color: comboBox.pressed ? "#81848c" : colorDefault  //#81848c

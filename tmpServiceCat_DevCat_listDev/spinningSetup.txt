@@ -1,0 +1,24 @@
+{"deviceID":"TV_1","gymName":"San Donato","roomName":"Spinning","description":"TV ingresso sinistra","shortDesc":"TV SX","type":"TV","address":"http://127.0.0.1:50040/"}
+{"deviceID":"TV_2","gymName":"San Donato","roomName":"Spinning","description":"TV in fondo a destra","shortDesc":"TV DX","type":"TV","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Light_1","gymName":"San Donato","roomName":"Spinning","type":"Light","description":"Linea luci principale","shortDesc":"Luci Princ","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Light_2","gymName":"San Donato","roomName":"Spinning","type":"Light","description":"Linea luci emergenza","shortDesc":"Luci Eme","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Audio_1","gymName":"San Donato","roomName":"Spinning","type":"Audio","description":"Sistema audio principale","shortDesc":"Audio1","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Video_1","gymName":"San Donato","roomName":"Spinning","type":"Video","description":"Sistema video principale","shortDesc":"Video1","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Spinbike_1","gymName":"San Donato","roomName":"Spinning","type":"Spinbike","description":"Spinbike number 1","shortDesc":"Spin1","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Spinbike_2","gymName":"San Donato","roomName":"Spinning","type":"Spinbike","description":"Spinbike number 2","shortDesc":"Spin2","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Spinbike_3","gymName":"San Donato","roomName":"Spinning","type":"Spinbike","description":"Spinbike number 3","shortDesc":"Spin3","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Spinbike_4","gymName":"San Donato","roomName":"Spinning","type":"Spinbike","description":"Spinbike number 4","shortDesc":"Spin4","address":"http://127.0.0.1:50040/"}
+{"deviceID":"RFID_1","gymName":"San Donato","roomName":"Spinning","type":"RFID","description":"out","shortDesc":"OUT","topic":"iotproj/San Donato/Spinning/porta/sensore/RFIDreader"}
+{"deviceID":"RFID_2","gymName":"San Donato","roomName":"Spinning","type":"RFID","description":"in","shortDesc":"IN","topic":"iotproj/San Donato/Spinning/porta/sensore/RFIDreader"}
+{"deviceID":"RFID_3","gymName":"San Donato","roomName":"Cardio","type":"RFID","description":"out","shortDesc":"OUT","topic":"iotproj/San Donato/Cardio/porta/sensore/RFIDreader"}
+{"deviceID":"RFID_4","gymName":"San Donato","roomName":"Cardio","type":"RFID","description":"in","shortDesc":"IN","topic":"iotproj/San Donato/Cardio/porta/sensore/RFIDreader"}
+{"deviceID":"Tapis_1","gymName":"San Donato","roomName":"Cardio","type":"Tapis","description":"Tapis number 1","shortDesc":"Tapis1","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Tapis_2","gymName":"San Donato","roomName":"Cardio","type":"Tapis","description":"Tapis number 2","shortDesc":"Tapis2","address":"http://127.0.0.1:50040/"}
+{"deviceID":"RFID_5","gymName":"San Donato","roomName":"Pilates","type":"RFID","description":"out","shortDesc":"OUT","topic":"iotproj/SanDonato/Pilates/porta/sensore/RFIDreader"}
+{"deviceID":"RFID_6","gymName":"San Donato","roomName":"Pilates","type":"RFID","description":"in","shortDesc":"IN","topic":"iotproj/SanDonato/Pilates/porta/sensore/RFIDreader"}
+{"deviceID":"Tapis_3","gymName":"San Donato","roomName":"Pilates","type":"Tapis","description":"Tapis number 1","shortDesc":"Tapis1","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Tapis_4","gymName":"San Donato","roomName":"Pilates","type":"Tapis","description":"Tapis number 2","shortDesc":"Tapis2","address":"http://127.0.0.1:50040/"}
+{"deviceID":"RFID_7","gymName":"Crocetta","roomName":"Cardio","type":"RFID","description":"out","shortDesc":"OUT","topic":"iotproj/Crocetta/Cardio/porta/sensore/RFIDreader"}
+{"deviceID":"RFID_8","gymName":"Crocetta","roomName":"Cardio","type":"RFID","description":"in","shortDesc":"IN","topic":"iotproj/Crocetta/Cardio/porta/sensore/RFIDreader"}
+{"deviceID":"Tapis_5","gymName":"Crocetta","roomName":"Cardio","type":"Tapis","description":"Tapis number 1","shortDesc":"Tapis1","address":"http://127.0.0.1:50040/"}
+{"deviceID":"Tapis_6","gymName":"Crocetta","roomName":"Cardio","type":"Tapis","description":"Tapis number 2","shortDesc":"Tapis2","address":"http://127.0.0.1:50040/"}

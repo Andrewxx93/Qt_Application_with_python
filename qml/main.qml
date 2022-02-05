@@ -155,7 +155,7 @@ Window {
                     Label {
                         id: labelRightInfo
                         color: "#5f6a82"
-                        text: qsTr("| HOME")
+                        //text: qsTr("| HOME")
                         anchors.left: labelTopInfo.right
                         anchors.right: parent.right
                         anchors.top: parent.top
@@ -330,67 +330,11 @@ Window {
                             onClicked: {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
-
                                 machineControl.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/odConfigurationPage.qml"))
+                                backend.updateContext('None')
 
                             }
-                        }
-
-                        LeftMenuButton {
-                            id: btnOpen
-                            width: leftMenu.width
-                            text: qsTr("Open")
-                            btnIconSource: "../images/svg_images/open_icon.svg"
-
-                            onPressed: {
-                                fileOpen.open()
-                            }
-
-                            FileDialog{
-                                id: fileOpen
-                                title: "Please choose a file"
-                                folder: shortcuts.home
-                                selectMultiple: false
-                                nameFilters: ["Text File (*.txt)"]
-                                onAccepted:{
-                                    backend.openFile(fileOpen.fileUrl)
-
-                                }
-
-
-                            }
-
-
-                        }
-
-                        LeftMenuButton {
-                            id: btnSave
-                            width: leftMenu.width
-                            text: qsTr("Save")
-                            btnIconSource: "../images/svg_images/save_icon.svg"
-
-
-                            onPressed: {
-                                fileSave.open()
-                            }
-
-                            FileDialog{
-                                id: fileSave
-                                title: "Save file"
-                                folder: shortcuts.home
-                                nameFilters: ["Text File (*.txt)"]
-                                selectExisting: false
-                                onAccepted:{
-                                    backend.getTextField(actualPage.getText)
-                                    backend.writeFile(fileSave.fileUrl)
-
-                                }
-
-
-                            }
-
-
                         }
 
 
@@ -399,7 +343,7 @@ Window {
                             id: machineControl
                             width: leftMenu.width
                             text: qsTr("Machine Control Configuration")
-                            btnIconSource: "../images/svg_images/open_icon.svg"
+                            btnIconSource: "../images/svg_images/windows-8-96.svg"
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
@@ -465,11 +409,18 @@ Window {
                     anchors.bottomMargin: 0
                     anchors.topMargin: 0
 
+//                    Component.onCompleted:{
 
+//                        deviceConnectorStatus.color = "red"
+//                        labelDeviceConnectorStatus.text = "disconnected"
+//                        labelDeviceConnectorStatus.color = "red"
+
+
+//                    }
 
                     Rectangle {
                         id: deviceConnectorStatus
-                        color: "#ffffff"
+                        //color: "#ffffff"
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
@@ -479,7 +430,7 @@ Window {
                         width :15
                     }
                     Label {
-                        id: labelBottomInfo
+                        id: labelDeviceConnectorStatus
                         color: "#5f6a82"
                         text: qsTr("Device connector Status here")
                         anchors.left: deviceConnectorStatus.right
@@ -643,10 +594,12 @@ Window {
         }
 
 
-        //        function onPrintTime(time){
-        //            labelData2.text = time
-        //        }
+        function onPrintTime(time){
+             labelRightInfo.text = time
+       }
     }
+
+
 
 
 
@@ -657,8 +610,8 @@ Window {
 /*##^##
 Designer {
     D{i:0;formeditorZoom:0.75}D{i:1}D{i:5}D{i:7}D{i:8}D{i:6}D{i:10}D{i:11}D{i:12}D{i:9}
-D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}D{i:23}D{i:22}D{i:25}D{i:24}D{i:26}
-D{i:20}D{i:27}D{i:18}D{i:29}D{i:28}D{i:31}D{i:32}D{i:34}D{i:35}D{i:33}D{i:30}D{i:17}
-D{i:3}D{i:2}D{i:36}D{i:38}D{i:37}D{i:40}D{i:39}D{i:42}D{i:41}D{i:44}D{i:43}D{i:45}
+D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}D{i:22}D{i:20}D{i:23}D{i:18}D{i:25}
+D{i:24}D{i:27}D{i:28}D{i:30}D{i:31}D{i:29}D{i:26}D{i:17}D{i:3}D{i:2}D{i:32}D{i:34}
+D{i:33}D{i:36}D{i:35}D{i:38}D{i:37}D{i:40}D{i:39}D{i:41}
 }
 ##^##*/

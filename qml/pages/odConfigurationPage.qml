@@ -94,7 +94,7 @@ Rectangle {
                 }
 
 
-                Component.onCompleted: backend.loadGymsStartup()
+                //Component.onCompleted: backend.retrieveData('None','None')
 
             }
 
@@ -374,6 +374,7 @@ Rectangle {
             anchors.topMargin: 0
             ListModel {
                 id: deviceModelList
+
             }
 
             GridView {
@@ -415,14 +416,16 @@ Rectangle {
 
                         MouseArea {
                             id: deviceMouseArea
+                            property string toolTipText
                             anchors.fill: parent
-                            onClicked: {
-                                console.log(description)
-                                //backend.retrieveData(odConfigurationPage.gymName,'Spinning')
+                            hoverEnabled: true
 
-
-                            }
                         }
+
+
+                        ToolTip.delay: 250
+                        ToolTip.visible: deviceMouseArea.containsMouse
+                        ToolTip.text: qsTr("DeviceID: " + deviceID + "\n\n"+"short: " + shortDec + "\n\nLong: " + longDec )
 
 
                                                     QtObject{
@@ -450,7 +453,7 @@ Rectangle {
         function onGymSig(gymList){
             gymModelList.clear()
             roomModelList.clear()
-
+            deviceModelList.clear()
             gymModelList.append(gymList)
 
         }
@@ -462,11 +465,21 @@ Rectangle {
             roomModelList.append(roomList)
         }
 
-        function onDeviceSig(deviceList){
+        function onDevSig(deviceList){
             console.log(deviceList)
             deviceModelList.clear()
             deviceModelList.append(deviceList)
         }
+
+        function onUpdElem(wrpData){
+                //{'model':1,'idx':list(self.dataStructure).index(gym),'data':{'status':'red'}}
+                //    console.log(wrpData)
+                //   console.log(data)
+                if (wrpData.model === 1){gymModelList.set(wrpData.idx,wrpData.data)}
+                if (wrpData.model === 2){roomModelList.set(wrpData.idx,wrpData.data)}
+                if (wrpData.model === 3){deviceModelList.set(wrpData.idx,wrpData.data)}
+
+               }
 
 
     }
