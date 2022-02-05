@@ -349,6 +349,15 @@ class MainWindow(QObject,threading.Thread):
     @Slot(str,str,str)
     def getAdjacency(self,selectedGym,selectedRoom,selectedDevice):
         print(f"getAdjacency:{selectedGym} {selectedRoom} {selectedDevice}")
+
+    
+    ###############################################
+    ### QUESTO SLOT RICEVERA' IL JSON IN FORMATO 
+    ### STRINGA.
+    ###############################################
+    @Slot(str)
+    def conf_SRM(self,actionDict):
+        print(json.loads(actionDict))
     
 
 

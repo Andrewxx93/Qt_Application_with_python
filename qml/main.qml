@@ -4,10 +4,12 @@ import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import "controls"
 import QtQuick.Dialogs 1.3
+
 Window {
     id: mainWindow
-    width: 1000
-    height: 600
+    width: 1400
+    height: 1000
+//    visibility: "FullScreen"
     visible: true
     minimumWidth: 800
     minimumHeight: 600
@@ -304,7 +306,7 @@ Window {
                         id: animationMenu
                         target: leftMenu
                         property: "width"
-                        to: if(leftMenu.width == 70) return 250; else return 70;
+                        to: if(leftMenu.width == 70) return 270; else return 70;
                         duration: 500
                         easing.type: Easing.InOutQuint
 
@@ -331,6 +333,7 @@ Window {
                                 btnHome.isActiveMenu = true
                                 btnSettings.isActiveMenu = false
                                 machineControl.isActiveMenu = false
+                                specificRoomManagement.isActiveMenu = false
                                 stackView.push(Qt.resolvedUrl("pages/odConfigurationPage.qml"))
                                 backend.updateContext('None')
 
@@ -347,7 +350,7 @@ Window {
                             onClicked: {
                                 btnHome.isActiveMenu = false
                                 btnSettings.isActiveMenu = false
-
+                                specificRoomManagement.isActiveMenu = false
                                 machineControl.isActiveMenu = true
                                 stackView.push(Qt.resolvedUrl("pages/machineControlConfiguration.qml"))
 
@@ -355,6 +358,23 @@ Window {
 
 
                         }
+                        LeftMenuButton {
+                            id: specificRoomManagement
+                            width: leftMenu.width
+                            text: qsTr("Specific Room Management")
+                            btnIconSource: "../images/svg_images/settings_icon.svg"
+                            onClicked: {
+                                btnHome.isActiveMenu = false
+                                btnSettings.isActiveMenu = false
+                                specificRoomManagement.isActiveMenu = true
+                                machineControl.isActiveMenu = false
+                                stackView.push(Qt.resolvedUrl("pages/specificRoomManagementConf.qml"))
+
+                            }
+
+
+                        }
+
                     }
 
                     LeftMenuButton {
@@ -367,7 +387,8 @@ Window {
                         btnIconSource: "../images/svg_images/settings_icon.svg"
                         onClicked: {
                             btnHome.isActiveMenu = false
-
+                            specificRoomManagement.isActiveMenu = false
+                            machineControl.isActiveMenu = false
                             btnSettings.isActiveMenu = true
                             stackView.push(Qt.resolvedUrl("pages/settingsPage.qml"))
 
@@ -609,9 +630,10 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:0.75}D{i:1}D{i:5}D{i:7}D{i:8}D{i:6}D{i:10}D{i:11}D{i:12}D{i:9}
-D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}D{i:22}D{i:20}D{i:23}D{i:18}D{i:25}
-D{i:24}D{i:27}D{i:28}D{i:30}D{i:31}D{i:29}D{i:26}D{i:17}D{i:3}D{i:2}D{i:32}D{i:34}
-D{i:33}D{i:36}D{i:35}D{i:38}D{i:37}D{i:40}D{i:39}D{i:41}
+    D{i:0;autoSize:true;formeditorZoom:0.75;height:600;width:1000}D{i:1}D{i:5}D{i:7}D{i:8}
+D{i:6}D{i:10}D{i:11}D{i:12}D{i:9}D{i:14}D{i:15}D{i:16}D{i:13}D{i:4}D{i:19}D{i:21}
+D{i:22}D{i:23}D{i:20}D{i:24}D{i:18}D{i:26}D{i:25}D{i:28}D{i:29}D{i:31}D{i:32}D{i:30}
+D{i:27}D{i:17}D{i:3}D{i:2}D{i:33}D{i:35}D{i:34}D{i:37}D{i:36}D{i:39}D{i:38}D{i:41}
+D{i:40}D{i:42}
 }
 ##^##*/
