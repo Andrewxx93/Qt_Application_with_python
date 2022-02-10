@@ -405,8 +405,11 @@ Item {
                         displayText: currentText
                         delegate: ItemDelegate {
                             onPressed: {
+                                pairMachineModelView.clear()
                                 itemMCC.viewGymName = name
                                 backend.getAdjacency( itemMCC.viewGymName,'None','None')
+
+
 
                             }
                             contentItem: Text {
@@ -699,6 +702,7 @@ Item {
         function onGymSig(gymList){
             gymModelList.clear()
             gymModelList.append(gymList)
+
             console.log(gymList)
 
         }

@@ -13,6 +13,7 @@ Button{
     property color bntColorClicked: "#00a1f1"
     property int iconWidth: 18
     property int iconHeight: 18
+    property int leftMarginCustom: 26
     property color activeMenuColor: "#55aaff"
     //property color activeMenuColorRigth: "#2c313c"
     property bool isActiveMenu: false
@@ -32,7 +33,7 @@ Button{
     }
 
     implicitWidth: 250
-    implicitHeight: 60
+    implicitHeight: 70
 
     background: Rectangle{
         id: bgBtn
@@ -76,7 +77,7 @@ Button{
         Image{
             id: iconBtn
             source: btnIconSource
-            anchors.leftMargin: 26
+            anchors.leftMargin: leftMarginCustom
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             sourceSize.width: iconWidth

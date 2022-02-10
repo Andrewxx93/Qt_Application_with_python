@@ -202,6 +202,7 @@ Item {
                             backend.jsonCreator(addGym.text, addRoom1.text,addRoom2.text,addGym.length)
 
                         }
+
                         enabled: if(addGym.length === 0 || addRoom1.length === 0 || addRoom2.length ===0){
                                      return false
                                  }else{

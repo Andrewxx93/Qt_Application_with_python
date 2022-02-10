@@ -7,9 +7,10 @@ import json
 import time
 import threading
 
-from PySide2.QtGui import QGuiApplication
+from PySide2.QtGui import QGuiApplication, QIcon
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
+from PySide2 import QtSvg
 
 def colConv(num):
     if num == 0: return 'green'
@@ -365,6 +366,7 @@ if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
     app.setOrganizationName('pythonProj')
     app.setOrganizationDomain('OD')
+    # app.setWindowIcon(QIcon("images\od_conf.svg")) # convertire svg in pixmap
     # Get Context
     main = MainWindow()
     main.start_engine()

@@ -571,37 +571,37 @@ Item {
             anchors.leftMargin: 0
             anchors.topMargin: 0
 
-                            Rectangle {
-                                id: buttonRect
-                                width: 200
-                                height: 200
-                                color: "#ffffff"
-                                anchors.top: parent.top
-                                anchors.topMargin: 0
-                                Layout.fillHeight: true
-                                Layout.fillWidth: true
-                                Layout.preferredWidth: 150
-                                Layout.maximumWidth: 200
+//                            Rectangle {
+//                                id: buttonRect
+//                                width: 200
+//                                height: 200
+//                                color: "#ffffff"
+//                                anchors.top: parent.top
+//                                anchors.topMargin: 0
+//                                Layout.fillHeight: true
+//                                Layout.fillWidth: true
+//                                Layout.preferredWidth: 150
+//                                Layout.maximumWidth: 200
 
-                                Button{
-                                    text: "Send"
-                                    anchors.left: parent.left
-                                    anchors.right: parent.right
-                                    anchors.bottom: parent.bottom
-                                    font.bold: true
-                                    anchors.rightMargin: 0
-                                    anchors.leftMargin: 0
-                                    anchors.bottomMargin: 0
+//                                Button{
+//                                    text: "Send"
+//                                    anchors.left: parent.left
+//                                    anchors.right: parent.right
+//                                    anchors.bottom: parent.bottom
+//                                    font.bold: true
+//                                    anchors.rightMargin: 0
+//                                    anchors.leftMargin: 0
+//                                    anchors.bottomMargin: 0
 
-                                    onClicked: {
-                                        console.log(actionEventRect.actionDict)
+//                                    onClicked: {
+//                                        console.log(actionEventRect.actionDict)
 
-                                        backend.conf_SRM(JSON.stringify(actionEventRect.actionDict))
-                                    }
+//                                        backend.conf_SRM(JSON.stringify(actionEventRect.actionDict))
+//                                    }
 
 
-                                }
-                            }
+//                                }
+//                            }
 
 
 
@@ -636,7 +636,6 @@ Item {
 Designer {
     D{i:0;autoSize:true;height:480;width:640}D{i:3}D{i:14}D{i:18}D{i:22}D{i:27}D{i:28}
 D{i:26}D{i:32}D{i:33}D{i:31}D{i:17}D{i:16}D{i:37}D{i:38}D{i:36}D{i:43}D{i:44}D{i:42}
-D{i:49}D{i:50}D{i:48}D{i:55}D{i:56}D{i:54}D{i:15}D{i:2}D{i:62}D{i:61}D{i:60}D{i:1}
-D{i:63}
+D{i:49}D{i:50}D{i:48}D{i:55}D{i:56}D{i:54}D{i:15}D{i:2}D{i:60}D{i:1}D{i:61}
 }
 ##^##*/
