@@ -42,6 +42,11 @@ class MainWindow(QObject,threading.Thread):
     devListSig = Signal(list)
     adjSig = Signal(list)
     connStatus = Signal('Qvariant')
+    
+    signalAle = Signal(int)
+    removeConfSig = Signal(int)
+    gymSig = Signal(list)
+    roomSig = Signal(list)
 
     # Signal Set Data
     printTime = Signal(str)
@@ -74,44 +79,25 @@ class MainWindow(QObject,threading.Thread):
             print(deviceList)
             self.deviceSig.emit(deviceList)
             
-
-    
-
-        
-
-    @Slot(str, str, str, int)
-    def jsonCreator(self, gymName, roomName1, roomName2, gymLength):
-        print(f"Gym name: {gymName}")
-        print(f"Gym name: {gymLength}")
-        print(f"Room1 name: {roomName1}")
-        print(f"Room2 name: {roomName2}")
-        # print(f"Current text in combobox: {currentText}")
-        self.setGymName.emit("The Gym name is: " + gymName)
-        if(gymName == '1'):
-            self.setModel.emit(["primo", "secondo", "terzo", "quarto"])
-            # Con questo si possono settare dinamicamente gli elementi dentro
-            # la ComboBox
-        elif(gymName == '2'):
-            self.setModel.emit(["uno", "due", "tre", "quattro"])
-            # Con questo si possono settare dinamicamente gli elementi dentro
-            # la ComboBox
-        else:
-            self.setModel.emit([])
-
-        od_conf = {
-            "gym": gymName,
-            "room1": roomName1,
-            "room2": roomName2
-
-        }
-
-        self.od_conf = od_conf
-
     @Slot(str)
-    def jsonSave(self, value):
-        with open("od_conf.json", 'w') as fp:
-            json.dump(self.od_conf, fp, indent=4)
-            print(f"File salvato {value}")
+    def receiveConfElem(self,actionDict):
+        
+        confElementDict = json.loads(actionDict)
+        print(type(confElementDict))
+        print(confElementDict)
+        self.signalAle.emit(0)
+        
+    @Slot(str)
+    def removeConf(self,confName):
+        ######SE LA RIMOZIONE AVVIENE CON SUCCESSO FAI EMIT 0 ALTRIMENTI EMIT 1
+        print(confName)
+        self.removeConfSig.emit(0) #Se tutto ok
+        
+        #self.removeConfSig.emit(1) #Se qualcosa è andato storto
+
+    @Slot()
+    def sendConf(self):
+        print("Invia conf dict allo SRM")
             
             
             

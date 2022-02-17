@@ -11,7 +11,7 @@ Window {
     height: 1000
 //    visibility: "FullScreen"  //Capire perché crasha !!!!
     visible: true
-    minimumWidth: 800
+    minimumWidth: 1000
     minimumHeight: 600
     color: "#00000000"
     title: qsTr("Owner DASHBOARD")
@@ -373,7 +373,7 @@ Window {
                                 machineControl.isActiveMenu = false
                                 userRegistration.isActiveMenu = false
                                 labelTopInfo.text = qsTr("Specific Room Management")
-                                stackView.push(Qt.resolvedUrl("pages/specificRoomManagementConf.qml"))
+                                stackView.push(Qt.resolvedUrl("pages/specificRoomManagementConf2.qml"))
 
                             }
 
