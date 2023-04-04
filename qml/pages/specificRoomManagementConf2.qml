@@ -7,7 +7,6 @@ import QtQuick.Dialogs 1.2
 import "../controls"
 
 
-
 Item {
     property string gymName: ""
     property string roomName: ""
@@ -18,6 +17,8 @@ Item {
     property var actionDict: {"0":{},"1":{},"2":{},"3":{}}
     property var elemConfDict: ({})
     property int removeError: 0
+    width: parent.width
+    height: parent.height
 
 //    width: 1400
 //    height: 1000
@@ -32,17 +33,19 @@ Item {
 
         }
 
+
     }
     Rectangle {
         id: rectangle
         anchors.fill:parent
         color: "#ffffff"
 
+
         ScrollView{
             anchors.fill: parent
             clip: true
             contentHeight: 1000
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+//            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
             Rectangle {
                 id: contentFrame
                 color: "#2c313c"
@@ -81,7 +84,7 @@ Item {
                     }
 
                     Component.onCompleted: {
-
+                        print("Inizializzo action dict riga 86")
                         initActionDict();
 
                     }
@@ -146,29 +149,29 @@ Item {
 
                                 ListModel{
                                     id: gymModelList
-                                    //                                ListElement{
-                                    //                                    name: "Crocetta"
-                                    //                                }
-                                    //                                ListElement{
-                                    //                                    name: "Salvario"
-                                    //                                }
-                                    //                                ListElement{
-                                    //                                    name: "Donato"
-                                    //                                }
+                                                                    ListElement{
+                                                                        name: "Crocetta"
+                                                                    }
+                                                                    ListElement{
+                                                                        name: "Salvario"
+                                                                    }
+                                                                    ListElement{
+                                                                        name: "Donato"
+                                                                    }
 
 
                                 }
                                 ListModel{
                                     id: roomModelList
-                                    //                                ListElement{
-                                    //                                    name: "Cardio"
-                                    //                                }
-                                    //                                ListElement{
-                                    //                                    name: "Tapis"
-                                    //                                }
-                                    //                                ListElement{
-                                    //                                    name: "Spinning"
-                                    //                                }
+                                                                    ListElement{
+                                                                        name: "Cardio"
+                                                                    }
+                                                                    ListElement{
+                                                                        name: "Tapis"
+                                                                    }
+                                                                    ListElement{
+                                                                        name: "Spinning"
+                                                                    }
 
                                 }
 
@@ -205,6 +208,7 @@ Item {
                                         displayText: currentText
 
                                         delegate: ItemDelegate {
+                                            width: parent.width
 
                                             contentItem: Text {
                                                 text : name
@@ -260,6 +264,7 @@ Item {
                                         textRole: 'name'
                                         displayText: currentText
                                         delegate: ItemDelegate {
+                                            width: parent.width
 
                                             contentItem: Text {
                                                 text: name
@@ -802,8 +807,9 @@ Item {
                                         clip: true
                                         Rectangle{
                                             id: calendarRect
-                                            color: "#ff0000"
-                                            border.color: "#fb1515"
+                                            color: "#00ff0000"
+                                            radius: 10
+                                            border.color: "#ffffff"
                                             Layout.maximumWidth: 100
                                             Layout.preferredHeight: 40
                                             Layout.preferredWidth: 100
@@ -813,7 +819,11 @@ Item {
                                             Label{
                                                 id: calendarRectText
                                                 text: "Selected Date"
-                                                color: "#000000"
+                                                anchors.fill: parent
+                                                horizontalAlignment: Text.AlignHCenter
+                                                verticalAlignment: Text.AlignVCenter
+                                                font.bold: true
+                                                color: "#ffffff"
 
                                             }
                                             MouseArea{
@@ -839,14 +849,10 @@ Item {
                                                         Component.onCompleted: set(new Date()) // today
                                                         onClicked:{
 
-                                                            calendarRectText.text = qsTr(Qt.formatDate(date, 'd/M/yyyy'))
-                                                            delegateRect.selectedData = qsTr(Qt.formatDate(date, 'd/M/yyyy'))
+                                                            calendarRectText.text = qsTr(Qt.formatDate(date, 'dd-MM-yyyy'))
+                                                            delegateRect.selectedData = qsTr(Qt.formatDate(date, 'dd-MM-yyyy'))
                                                             delegateRect.dayDataName = getSelectedDay()
                                                             datePopup.close()
-
-                                                            //calendarRectText.dayName = getSelectedDay()
-                                                            //                                                        print("Il giorno scelto e' : ",calendarRectText.dayName)
-                                                            //                                                        print('onClicked', delegateRect.selectedData)
 
 
 
@@ -964,15 +970,28 @@ Item {
 
                                             Layout.fillHeight: true
                                             Layout.fillWidth: true
+                                            Rectangle{
+                                                color: "#00000000"
+                                                anchors.top: parent.top
+                                                anchors.topMargin: 8
+
+                                                width: 30
+                                                height: 30
+
                                             CustomRemoveButton{
                                                 id: rmvButton
                                                 text: qsTr("X")
                                                 anchors.fill: parent
+//                                                anchors.verticalCenter: parent.verticalCenter
+//                                                anchors.left: parent.left
+//                                                anchors.right: parent.right
+//                                                anchors.top: parent.top
                                                 onClicked: {
 
                                                     scheduledListView.scheduledListModel.remove(index)
 
                                                 }
+                                            }
                                             }
                                         }
 
@@ -1189,25 +1208,36 @@ Item {
                                 anchors.top: addConfigurationLabel.bottom
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 anchors.topMargin: 20
+
+
+//                                enabled: if(totalThresholdCustomField.text.length===0){
+
+//                                             return false
+//                                         }else{
+
+//                                             return true
+//                                         }
                                 onClicked: {
                                     //                                print("La lunghezza del campo threshold e': ",setThresholdTextField.text.length)
                                     //                                print("La lunghezza del campo nameEventLesson e': ",nameEventLessonText.text.length)
-                                    if(nameEventLessonText.text.length===0  && setThresholdTextField.text.length ===0 ) {
+                                    if(nameEventLessonText.text.length===0  && totalThresholdCustomField.text.length ===0 ) {
 
                                         nameEventLessonText.errorCode = 1
-                                        setThresholdTextField.errorCode = 1
+                                        totalThresholdCustomField.errorCode = 1
 
-                                    }else if(nameEventLessonText.text.length===0 &&setThresholdTextField.text.length !==0){
+
+                                    }else if(nameEventLessonText.text.length===0 &&totalThresholdCustomField.text.length !==0){
                                         nameEventLessonText.errorCode = 1
-                                        setThresholdTextField.errorCode = 0
-                                    }else if(nameEventLessonText.text.length!==0 &&setThresholdTextField.text.length ===0){
+                                        totalThresholdCustomField.errorCode = 0
+                                    }else if(nameEventLessonText.text.length!==0 &&totalThresholdCustomField.text.length ===0){
                                         nameEventLessonText.errorCode = 0
-                                        setThresholdTextField.errorCode = 1
+                                        totalThresholdCustomField.errorCode = 1
+
                                     }
 
                                     else{
                                         nameEventLessonText.errorCode = 0
-                                        setThresholdTextField.errorCode = 0
+                                        totalThresholdCustomField.errorCode = 0
                                         populateElemConfDict()
                                         backend.receiveConfElem(JSON.stringify(elemConfDict))
                                     }
@@ -1231,49 +1261,97 @@ Item {
                     anchors.bottomMargin: 0
                     anchors.topMargin: 20
                     anchors.leftMargin: 0
+                    Component.onCompleted: {
+                        configurationSRMModel.append({gymNameView:"gym1", roomNameView: "room1 ", confNameView: "Spinning-1"})
+                        configurationSRMModel.append({gymNameView:"gym2", roomNameView: "room2 ", confNameView: "Spinning-2"})
+                    }
 
 
 
                     Dialog {
                         id: moreInfoMessage
                         width: 400
-                        height: 200
+                        height: 400
                         title: "Configuration Info"
+
                         contentItem: Rectangle{
+                            id: rectangle1
+                            anchors.fill:parent
+                            Label{
+                                id: actionDictViewLabel
+                                width: 200
+                                height: 30
+                                text: "Action Dict"
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.bold: true
+                            }
+                            Label{
+                                id: scheduledDictViewLabel
+                                width: 200
+                                height: 30
+                                text: "Scheduled Dict"
+                                anchors.left: actionDictViewLabel.right
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                font.bold: true
+                                anchors.leftMargin: 0
+                            }
 
                             ScrollView{
-                                id: scrollView
-                                anchors.fill:parent
+                                id: scrollViewActionDict
+                                anchors.left: parent.left
+                                anchors.top: actionDictViewLabel.bottom
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 0
+                                anchors.topMargin: 0
+                                anchors.leftMargin: 0
+                                width: 200
+                                contentWidth: width
+
                                 clip: true
-                                contentHeight: 400
-                                Rectangle{
-                                    id: confNameDialogRect
-                                    width: parent.width
-                                    height: 200
-                                    color:"red"
-                                    Label{
-                                        id:confNameDialogLabel
 
-                                    }
+                                    Text{
+                                        id:actionDictDialogText
+                                        anchors.fill: parent
+                                        focus: true
+                                        wrapMode: Text.WordWrap
 
                                 }
-                                Rectangle{
-                                    id: actionDictDialogRect
-                                    width: parent.width
-                                    height: 200
-                                    color:"blue"
-                                    anchors.top: confNameDialogRect.bottom
-                                    anchors.topMargin: 0
-                                    Label{
-                                        id:actionDictDialogLabel
 
-                                    }
-
-                                }
 
 
 
                             }
+                            ScrollView{
+                                id: scrollViewScheduledDict
+                                width: 200
+                                contentWidth: width
+
+                                anchors.left: scrollViewActionDict.right
+                                anchors.top: scheduledDictViewLabel.bottom
+                                anchors.bottom: parent.bottom
+                                anchors.bottomMargin: 0
+                                anchors.topMargin: 0
+                                anchors.leftMargin: 0
+                                clip: true
+
+
+
+                                    Text{
+                                        id:scheduledDictDialogText
+                                        anchors.fill: parent
+                                        focus: true
+                                        wrapMode: Text.WordWrap
+
+
+                                }
+
+
+
+
+                            }
+
                         }
 
 
@@ -1311,7 +1389,7 @@ Item {
 
                             Rectangle {
                                 id: gymNameHeaderRect
-                                color: "#6abfe2"
+                                color: "#4891d9"
                                 Layout.preferredHeight: 40
                                 Layout.minimumHeight: 40
                                 Layout.maximumHeight: 40
@@ -1336,7 +1414,7 @@ Item {
                             }
                             Rectangle {
                                 id: roomNameHeaderRect
-                                color: "#6abfe2"
+                                color: "#4891d9"
                                 Layout.preferredHeight: 40
                                 Layout.minimumHeight: 40
                                 Layout.maximumHeight: 40
@@ -1359,7 +1437,7 @@ Item {
                             }
                             Rectangle {
                                 id: confNameHeaderRect
-                                color: "#6abfe2"
+                                color: "#4891d9"
                                 Layout.preferredHeight: 40
                                 Layout.minimumHeight: 40
                                 Layout.maximumHeight: 40
@@ -1390,8 +1468,8 @@ Item {
                         id: configurationListView
                         property ListModel configListModel: ListModel{
                             id: configurationSRMModel;
-                            ListElement{gymNameView: "Spinning-1";roomNameView: "Cardio";confNameView:"prova1";thresholdView: 20; }
-                            ListElement{gymNameView: "Spinning-1";roomNameView: "HIIT";confNameView:"prova2";thresholdView:10; }
+//                            ListElement{gymNameView: "Spinning-1";roomNameView: "Cardio";confNameView:"prova1";thresholdView: 20; }
+//                            ListElement{gymNameView: "Spinning-1";roomNameView: "HIIT";confNameView:"prova2";thresholdView:10; }
                         }
                         model: configurationSRMModel
                         anchors.left: parent.left
@@ -1421,6 +1499,7 @@ Item {
                             RowLayout {
                                 id: row1
 
+
                                 //                            ToolTip.delay: 250
                                 //                            ToolTip.visible: mouseArea.containsMouse
                                 //                            ToolTip.text: gymName+": "+roomName+"\n"+JSON.stringify(actionDict,null,1)+"\n"+"Active machine: " + activeMachines + "\n\n"+ "Room Capacity: " + threshold.toString()
@@ -1428,7 +1507,9 @@ Item {
 
                                 Rectangle {
                                     id: gynNameConfViewRect
-                                    color: "#6abfe2"
+                                    color: "#006abfe2"
+                                    radius: 10
+                                    border.color: "#ffffff"
                                     Layout.preferredHeight: 40
                                     Layout.minimumHeight: 40
                                     Layout.maximumHeight: 40
@@ -1450,7 +1531,9 @@ Item {
                                 }
                                 Rectangle {
                                     id: roomNameConfViewRect
-                                    color: "#6abfe2"
+                                    color: "#006abfe2"
+                                    radius: 10
+                                    border.color: "#ffffff"
                                     Layout.preferredHeight: 40
                                     Layout.minimumHeight: 40
                                     Layout.maximumHeight: 40
@@ -1472,7 +1555,9 @@ Item {
                                 }
                                 Rectangle {
                                     id: confNameViewRect
-                                    color: "#6abfe2"
+                                    color: "#006abfe2"
+                                    radius: 10
+                                    border.color: "#ffffff"
                                     Layout.preferredHeight: 40
                                     Layout.minimumHeight: 40
                                     Layout.maximumHeight: 40
@@ -1510,13 +1595,49 @@ Item {
 
                                     Layout.fillHeight: true
                                     Layout.fillWidth: true
-                                    CustomRemoveButton{
+                                    CustomButton{
                                         id: moreInfoButton
                                         text: qsTr("INFO")
                                         anchors.fill: parent
                                         onClicked: {
                                             moreInfoMessage.visible = true
-                                            confNameDialogLabel.text = configurationListView.configListModel.get(index).confNameView
+//                                            confNameDialogLabel.text = configurationListView.configListModel.get(index).confNameView;
+
+                                            var actionDictView = {
+                                                "0":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "1":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "2":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "3":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "4":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "5":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "6":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "7":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"}
+
+                                            }
+                                            var scheduledDictView = {
+                                                "0":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "1":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "2":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "3":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "4":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "5":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "6":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "70":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "00":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "10":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "20":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "30":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "40":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "50":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "60":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"},
+                                                "70":{ "tapis-1":"True","tapis-2":"True","Video-1":"True"}
+
+                                            }
+
+
+                                            actionDictDialogText.text =JSON.stringify(actionDictView,null,1) //Rimuovere parentesi graffe
+                                            scheduledDictDialogText.text =JSON.stringify(scheduledDictView,null,1) //Rimuovere parentesi gra
+
 
 
                                         }
@@ -1591,31 +1712,59 @@ Item {
 
     Connections{
         target: backend
-        function onSignalAle(errorCode){
-            if(errorCode === 0){
-                //Reset All
+        function onResetAllSig(code){
+            if(code ===0){
+                print("Adesso spacco tutto")
                 gymComboBox.currentIndex =-1
                 roomComboBox.currentIndex = -1
                 nameEventLessonText.text = ""
                 setThresholdTextField.text = ""
+                totalThresholdCustomField.text = ""
                 scheduledListView.scheduledListModel.clear()
-
-                /////////////////////////////
-                //Bisogna Resettare anche le variabili !!!!
+                configurationSRMModel.clear()
                 gymName = ""
                 roomName = ""
 
-                scheduledDict = ({})
+               scheduledDict = ({})
 
-                for(var i=0; i<modelData.count; i++){
+               for(var i=0; i<modelData.count; i++){
                     userListView.itemAtIndex(i).checked = false
                     ownerListView.itemAtIndex(i).checked = false
                     workerListView.itemAtIndex(i).checked = false
                     trainerListView.itemAtIndex(i).checked = false
                     schedulerDeviceSelectionListView.itemAtIndex(i).checked = false
 
-                }
+                                }
                 initActionDict()
+
+            }
+        }
+
+        function onSignalAle(errorCode){
+            if(errorCode === 0){
+                //Reset All
+//                gymComboBox.currentIndex =-1
+//                roomComboBox.currentIndex = -1
+                nameEventLessonText.text = ""
+                setThresholdTextField.text = ""
+                scheduledListView.scheduledListModel.clear()
+
+                /////////////////////////////
+                //Bisogna Resettare anche le variabili !!!!
+//                gymName = ""
+//                roomName = ""
+
+                scheduledDict = ({})
+
+                for(var i=0; i<modelData.count; i++){
+//                    userListView.itemAtIndex(i).checked = false
+//                    ownerListView.itemAtIndex(i).checked = false
+//                    workerListView.itemAtIndex(i).checked = false
+//                    trainerListView.itemAtIndex(i).checked = false
+                    schedulerDeviceSelectionListView.itemAtIndex(i).checked = false
+
+                }
+//                initActionDict()
 
 
             }
@@ -1643,6 +1792,9 @@ Item {
             console.log(roomList)
             roomModelList.append("room Model for SRM",roomList)
         }
+//        function onPopulateSRMModel(){
+
+//        }
 
 
     }
@@ -1686,17 +1838,15 @@ Item {
     function populateSchedulerDict() {
         scheduledDict = ({})
         for(var i = 0; i< scheduledListView.count; i++ ){
-            var str = scheduledListView.itemAtIndex(i).selectedData
+            //var str = scheduledListView.itemAtIndex(i).selectedData
 
-            while(str.includes("/")){
-                str = str.replace("/", "-");
-            }
+
             print("Il tipo e': ",scheduledListView.itemAtIndex(i).confType)
             print("La fine e': ",scheduledListView.itemAtIndex(i).finishTime)
-            var key = str+" "+scheduledListView.itemAtIndex(i).startTime + " " +scheduledListView.itemAtIndex(i).finishTime
+            var key = scheduledListView.itemAtIndex(i).selectedData+" "+scheduledListView.itemAtIndex(i).startTime + " " +scheduledListView.itemAtIndex(i).finishTime
             if(scheduledListView.itemAtIndex(i).confType==="Event"){
                 print("before",key)
-                key = str+" "+scheduledListView.itemAtIndex(i).startTime
+                key = scheduledListView.itemAtIndex(i).selectedData+" "+scheduledListView.itemAtIndex(i).startTime
                 print("after",key)
             }
 
@@ -1704,6 +1854,9 @@ Item {
 
 
             //scheduledDict[key] = {"Threshold": scheduledListView.itemAtIndex(i).threshold}
+            
+            if (threshold==="")
+                print("Procione del signore")
             scheduledDict[key] = {"Threshold": parseInt(threshold)}
 
             for(var [device, value] of Object.entries(schedulerDeviceSelectionRect.selectedDevices)){
@@ -1743,12 +1896,12 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.5;height:480;width:640}D{i:1}D{i:6}D{i:10}D{i:14}
-D{i:15}D{i:17}D{i:18}D{i:16}D{i:22}D{i:23}D{i:21}D{i:27}D{i:28}D{i:26}D{i:13}D{i:12}
-D{i:31}D{i:32}D{i:30}D{i:37}D{i:38}D{i:36}D{i:43}D{i:44}D{i:42}D{i:49}D{i:50}D{i:48}
-D{i:11}D{i:5}D{i:56}D{i:59}D{i:58}D{i:61}D{i:60}D{i:63}D{i:62}D{i:57}D{i:65}D{i:64}
-D{i:55}D{i:54}D{i:90}D{i:92}D{i:93}D{i:91}D{i:89}D{i:98}D{i:99}D{i:97}D{i:102}D{i:103}
-D{i:101}D{i:88}D{i:87}D{i:105}D{i:112}D{i:116}D{i:115}D{i:118}D{i:117}D{i:120}D{i:119}
-D{i:114}D{i:113}D{i:121}D{i:139}D{i:138}D{i:104}D{i:4}D{i:3}D{i:2}D{i:140}
+    D{i:0;formeditorZoom:0.5;height:1000;width:1600}D{i:1}D{i:6}D{i:10}D{i:14}D{i:18}
+D{i:23}D{i:24}D{i:22}D{i:28}D{i:29}D{i:27}D{i:33}D{i:34}D{i:32}D{i:13}D{i:12}D{i:37}
+D{i:38}D{i:36}D{i:43}D{i:44}D{i:42}D{i:49}D{i:50}D{i:48}D{i:55}D{i:56}D{i:54}D{i:11}
+D{i:5}D{i:62}D{i:65}D{i:64}D{i:67}D{i:66}D{i:69}D{i:68}D{i:63}D{i:71}D{i:70}D{i:61}
+D{i:60}D{i:97}D{i:99}D{i:100}D{i:98}D{i:96}D{i:105}D{i:106}D{i:104}D{i:109}D{i:110}
+D{i:108}D{i:95}D{i:94}D{i:112}D{i:120}D{i:124}D{i:123}D{i:126}D{i:125}D{i:128}D{i:127}
+D{i:122}D{i:121}D{i:129}D{i:145}D{i:144}D{i:111}D{i:4}D{i:3}D{i:2}D{i:146}
 }
 ##^##*/

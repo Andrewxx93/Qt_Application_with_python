@@ -8,8 +8,10 @@ import time
 import threading
 
 from PySide2.QtGui import QGuiApplication, QIcon
+from PySide2.QtWidgets import QApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtCore import QObject, Slot, Signal, QTimer, QUrl
+from PySide2.QtWebEngine import QtWebEngine
 from PySide2 import QtSvg
 
 def colConv(num):
@@ -39,19 +41,17 @@ class MainWindow(QObject,threading.Thread):
     gymSig = Signal(list)
     roomSig = Signal(list)
     devSig = Signal(list)
-    devListSig = Signal(list)
     adjSig = Signal(list)
     connStatus = Signal('Qvariant')
     
     signalAle = Signal(int)
     removeConfSig = Signal(int)
-    gymSig = Signal(list)
-    roomSig = Signal(list)
 
     # Signal Set Data
     printTime = Signal(str)
     
     def start_engine(self):
+        QtWebEngine.initialize()
         self.engine = QQmlApplicationEngine()
         self.start()
 
@@ -66,15 +66,17 @@ class MainWindow(QObject,threading.Thread):
         
     @Slot(str,str)
     def retrieveData(self,gymName,roomName):
+        print("\n\n\nRetrive data!!!!\n\n\n")
+        if gymName == 'None' and roomName == 'None':
+            gymList = [{"name": "San Donato", "status": "green"}]
+            self.gymSig.emit(gymList)
         if roomName == 'None':
-            #roomList = list(self.dataStructure[gymName].keys())
             if gymName == "San Donato":
-                roomList = self.l2
+                roomList = [{"name": "Cazzo", "status": "green"}]
             else:
-                roomList = self.l2_bis
+                roomList = [{"name": "Prova", "status": "red"}]
             self.roomSig.emit(roomList)
         else:
-            #deviceList = list(self.dataStructure[gymName][roomName].keys())
             deviceList = self.l3
             print(deviceList)
             self.deviceSig.emit(deviceList)
@@ -99,236 +101,7 @@ class MainWindow(QObject,threading.Thread):
     def sendConf(self):
         print("Invia conf dict allo SRM")
             
-            
-            
-    ################# ALE'S BACKEND ###############
 
-    def run(self):
-        while True:
-            self.updateData()
-            time.sleep(1)
-
-            
-
-
-    # FRONT-END METHODS
-
-    # INPUT: Palestra e stanza di cui si vuole ricavare la lista dei dispositivi
-    # OUTPUT: Lista dei dispositivi per la stanza e la palestra selezionata
-    #         Se il parametro firstMachine == 'None' allora ritorna una lista con tutti
-    #         i dispositivi, se il parametro firstMachine è un deviceID, ritorna la
-    #         lista di tutti i dispositivi accoppiabili priva del dispositivo indicato 
-    #         dal deviceID passato in firstMachine
-
-    # @Slot(str,str,str)
-    # def pairList(self,gym,room,firstMachine):
-    #     if firstMachine == 'None':
-    #         #Return the whole available/pairable machine list
-    #         pass
-    #     else:
-    #         #Return the whole listwithout available/pairable machine list
-    #     self.devListSig.emit(deviceList)
-
-    # OUTPUT: ritorna la lista dei dispositivi adiacenti al dispositivo indicato 
-    # @Slot(str,str,str)
-    # def getAdjacency(self,selectedGym,selectedRoom,selectedDevice):
-    #     #Do processing and return adjList
-    #     self.adjSig.emit(adjList)
-        
-
-    @Slot(str,str)
-    def retrieveData(self,gym,room):
-        # This function is called by the onClicked method of gym/room elements
-        # If room is 'None', the click is coming from a gym element which request roomList
-        # otherwise it is coming from a room element which request devList
-        if gym == 'None' and room == 'None':
-            self.context[room] = None
-            self.context[gym] = None
-            return
-        if room == 'None':
-            #load rooms
-            #ENTERING CRITICAL SECTION, ADD LOCKS
-            lista = list(self.dataStructure[gym].keys())
-            r = []
-            for room in lista:
-                r.append({'name':room,'status':colConv(self.status[gym][room]['status'])})
-            self.roomSig.emit(r)
-            
-            self.context['gym'] = gym
-            self.context['room'] = None
-            #RELEASE LOCK
-        else:
-            #load devices
-            #ENTERING CRITICAL SECTION, ADD LOCKS
-            #dList = [{'type':item['type'],'status':colConv(item['status'])} for item in self.dataStructure[gym][room]]
-            self.devSig.emit([{'type':item['type'],'status':colConv(item['status'])} for item in self.dataStructure[gym][room].values()])
-            self.context['gym'] = gym
-            self.context['room'] = room
-            #RELEASE LOCK 
-
-    # BACK-END METHODS
-
-    def sortData(self):
-        #Sorting gyms
-        for gym in self.dataStructure:
-            self.dataStructure = {k: v for k, v in sorted(self.dataStructure.items(), key=lambda item: item[0])}
-        # Sorting rooms
-        for gym in self.dataStructure:
-            for room in self.dataStructure[gym]:
-                    self.dataStructure[gym] = {k: v for k, v in sorted(self.dataStructure[gym].items(), key=lambda item: item[0])}
-        ##################################################
-        # Sorting devices
-        for gym in self.dataStructure:
-            for room in self.dataStructure[gym]:
-                self.dataStructure[gym][room] = {k: v for k, v in sorted(self.dataStructure[gym][room].items(), key=lambda item: item[0])}
-                for idx,dev in enumerate(self.dataStructure[gym][room]):
-                    self.dataStructure[gym][room][dev]['idx'] = idx 
-
-    def updateStatus(self,activeDevices):
-        totalSet = set()
-        freshSet = set()
-
-        freshSet.update([device['deviceID'] for device in activeDevices])
-        ## replace with compact form
-        for gym in self.dataStructure:
-            for room in self.dataStructure[gym]:
-                totalSet.update(list(self.dataStructure[gym][room]))
-        # ############################################
-
-        unavailableDev = totalSet.difference(freshSet)      
-        
-        if len(unavailableDev) == 0: 
-            for gym in self.status:
-                for room in self.status[gym]:
-                    if room != 'status':
-                        self.status[gym][room]['status'] = 0
-                        if self.context['gym'] == gym:
-                            self.updElem.emit({'model':2,'idx':list(self.dataStructure[gym]).index(room),'data':{'status':'green'}})
-
-                    else:
-                        self.status[gym]['status'] = 0
-                        if self.context['gym'] != None:
-                            self.updElem.emit({'model':1,'idx':list(self.dataStructure).index(gym),'data':{'status':'green'}})
-
-            return
-        
-        faultSet = set()
-        
-        #SISTEMARE STA CAGATA
-        for missingDev in unavailableDev:
-            for gym in self.dataStructure:
-                for room in self.dataStructure[gym]:
-                    retVal = self.dataStructure[gym][room].get(missingDev,None)
-                    if  retVal!= None:
-                        self.dataStructure[gym][room][missingDev]['status'] = 3
-                        faultSet.add(gym+'/'+room)
-                        if self.context['gym'] == gym and self.context['room'] == room:
-                            self.updElem.emit({'model':3,'idx':retVal['idx'],'data':{'status':'red'}}) #da usare con model.set()
-        
-        for item in faultSet:
-            gym = item.split('/')[0]
-            room = item.split('/')[1]
-            self.status[gym]['status'] = 3
-            self.status[gym][room]['status'] = 3
-            self.updElem.emit({'model':1,'idx':list(self.dataStructure).index(gym),'data':{'status':'red'}})
-            if self.context['gym'] == gym:
-                self.updElem.emit({'model':2,'idx':list(self.dataStructure[gym]).index(room),'data':{'status':'red'}})
-    
-    @Slot(str)
-    def updateContext(self,menu):
-        self.context['menu'] = menu
-    
-    def updateData(self):
-        # Retrieve active devices from device catalog
-        try:
-            devCat = requests.get(self.srvCat+'get/serviceID?serviceID=Device+Catalog').json()['url']
-            activeDevices = requests.get(devCat+'get/deviceID').json()
-        except:
-            #self.connStatus.emit({'status':3,'description':'Connection Error'})
-            return
-
-        #self.connStatus.emit({'status':0,'description':'Connected'})
-        
-        # Set initially gym and room status to Fault, if the gym/room 
-        # don't contains missing devices it will be updated in updateStatus() 
-        for gym in self.status:
-            for vGym in self.status[gym]:
-                if vGym != 'status':
-                    self.status[gym][vGym]['status'] = 3
-                else:
-                        self.status[gym]['status'] = 3
-
-        if self.dataStructure != {}:
-            if self.context['menu'] != 'home': self.updateFlag['gyms']=True
-            self.updateStatus(activeDevices)
-
-        for device in activeDevices:
-            dGym = device['gymName']
-            dRoom = device['roomName']
-            dID = device['deviceID']
-            
-            #### TO BE REMOVED WHEN PEPPE SI SPICCIA #####
-            if dID == 'M1': continue
-            if dID == 'M2': continue
-            if dID == 'M3': continue
-            ##############################################
-            gymVal = self.dataStructure.get(dGym,None)
-            if gymVal == None: 
-                self.status[dGym] = dict(status=0)
-                self.dataStructure[dGym] = {}
-                self.updateFlag['gyms'] = True
-
-            roomVal = self.dataStructure[dGym].get(dRoom,None)
-            if roomVal == None: 
-                self.dataStructure[dGym][dRoom] = {}
-                self.status[dGym][dRoom] = dict(status=0)
-                if self.context['gym'] == dGym:
-                    self.updateFlag['rooms'] = True
-
-            devVal = self.dataStructure[dGym][dRoom].get(dID,None)
-            
-            if self.context['room'] == dRoom:
-                if devVal == None:
-                    self.updateFlag['devices'] = True
-                else:
-                    if devVal['status'] != 0:
-                        self.updateFlag['devices'] = True
-
-            self.dataStructure[dGym][dRoom][dID] = dict(type=device['type'],status=0,idx=None,description=device['description'],shordDesc=device['shortDesc'])
-        #     self.dataStructure[dGym][dRoom][dID]['type'] = device['type']
-        #     self.dataStructure[dGym][dRoom][dID]['status'] = 0
-        #     self.dataStructure[dGym][dRoom][dID]['idx'] = None
-        #     self.dataStructure[dGym][dRoom][dID]['description'] = device['description']
-        #     self.dataStructure[dGym][dRoom][dID]['shortDesc'] = device['shortDesc']
-        self.sortData()
-        # Checks if during data visualization there was an update inherent to 
-        # selected visualization and eventually update it
-        if True in self.updateFlag.values():
-            if self.updateFlag['gyms'] == True: 
-                lista = list(self.dataStructure.keys())
-                l = []
-                for item in lista:
-                    l.append({'name':item,'status':'green'})
-                self.gymSig.emit(l)
-                self.context['menu'] = 'home'
-                self.updateFlag['gyms'] = False
-
-            if self.updateFlag['rooms'] == True: 
-                lista = list(self.dataStructure[self.context['gym']].keys())
-                r = []
-                for item in lista:
-                    r.append({'name':item,'status':'green'})
-                self.roomSig.emit(r)
-                self.updateFlag['rooms'] = False
-
-            if self.updateFlag['devices'] == True: 
-                lista = list(self.dataStructure[self.context['gym']][self.context['room']].keys())
-                r = []
-                for item in lista:
-                    r.append({'type':item,'status':'green'})
-                self.devSig.emit(r)
-                self.updateFlag['devices'] = False
-                
     @Slot(str,str,str,str)
     def pairList(self,gym,room,m1,m2):
         print(f"Pair List: {gym} {room} {m1} {m2}")
@@ -345,11 +118,19 @@ class MainWindow(QObject,threading.Thread):
     @Slot(str)
     def conf_SRM(self,actionDict):
         print(json.loads(actionDict))
+
+    resetAllSig = Signal(int)
+    @Slot()
+    def sendConf(self):
+        self.resetAllSig.emit(0)
+        
+    
+        
     
 
 
 if __name__ == "__main__":
-    app = QGuiApplication(sys.argv)
+    app = QApplication(sys.argv)
     app.setOrganizationName('pythonProj')
     app.setOrganizationDomain('OD')
     # app.setWindowIcon(QIcon("images\od_conf.svg")) # convertire svg in pixmap

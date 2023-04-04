@@ -126,10 +126,8 @@ Item {
                         textRole: 'name'
                         displayText: currentText
 
-
-
                         delegate: ItemDelegate {
-
+                                width: parent.width
                                 contentItem: Text {
                                     text : name
                                     elide: Text.ElideRight
@@ -178,7 +176,7 @@ Item {
                         textRole: 'name'
                         displayText: currentText
                         delegate: ItemDelegate {
-
+                                width: parent.width
                                 contentItem: Text {
                                     text: name
 
@@ -222,7 +220,7 @@ Item {
                         displayText: currentText
 
                         delegate: ItemDelegate {
-
+                            width: parent.width
                             contentItem: Text {
                                 text: name
 
@@ -265,7 +263,7 @@ Item {
                         textRole: 'name'
                         displayText: currentText
                         delegate: ItemDelegate {
-
+                        width: parent.width
                             contentItem: Text {
                                 text: name
 
@@ -404,6 +402,7 @@ Item {
                         textRole: 'name'
                         displayText: currentText
                         delegate: ItemDelegate {
+                            width: parent.width
                             onPressed: {
                                 pairMachineModelView.clear()
                                 itemMCC.viewGymName = name
@@ -450,6 +449,7 @@ Item {
                         textRole: 'name'
                         displayText: currentText
                         delegate: ItemDelegate {
+                            width: parent.width
                             onPressed: {
                                 itemMCC.viewRoomName = name
                                 backend.getAdjacency( itemMCC.viewGymName,itemMCC.viewRoomName,'None')
@@ -490,6 +490,7 @@ Item {
                         textRole: 'name'
                         displayText: currentText
                         delegate: ItemDelegate {
+                            width: parent.width
                             onPressed: {
                                 itemMCC.viewMachine = name
                                 backend.getAdjacency( itemMCC.viewGymName,itemMCC.viewRoomName,itemMCC.viewMachine)

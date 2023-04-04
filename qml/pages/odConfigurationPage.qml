@@ -9,6 +9,7 @@ Rectangle {
     color: "#2c313c"
     property string gymName: ""
     property string roomName: "Cardio"
+    property int oldIndex: -1
 
 
     anchors{
@@ -71,6 +72,14 @@ Rectangle {
 
             ListModel{
                 id: gymModelList
+//                ListElement{name: "Crocetta"; status: "red"}
+//                ListElement{name: "gym1"; status: "green"}
+//                ListElement{name: "gym2"; status: "green"}
+//                ListElement{name: "gym3"; status: "green"}
+//                ListElement{name: "gym4"; status: "green"}
+//                ListElement{name: "gym5"; status: "green"}
+//                ListElement{name: "gym6"; status: "green"}
+
 
             }
 
@@ -94,7 +103,7 @@ Rectangle {
                 }
 
 
-                //Component.onCompleted: backend.retrieveData('None','None')
+                Component.onCompleted: backend.retrieveData('None','None')
 
             }
 
@@ -105,6 +114,7 @@ Rectangle {
                     spacing: 10
                     Rectangle{
                         id: gymRectModel
+
 
                         height: 100
                         width: 100
@@ -117,32 +127,36 @@ Rectangle {
 
 
 
-
-
                         MouseArea {
                             id: gymMouseArea
                             anchors.fill: parent
                             //The first parameter is the gym name, the second parameter will be used to select the room
                             onClicked:  {
-                                odConfigurationPage.gymName = name
+                                 odConfigurationPage.gymName = name
+                                //////////////////////////// Function that change the borde color of the selected Item: in this case GYM
+
+                                if(oldIndex === -1){
+                                    print(gymGridView.itemAtIndex(index).children[0].border.color ="white")
+                                    oldIndex = index
+                                }
+                                else if(oldIndex === index){
+                                    print(gymGridView.itemAtIndex(oldIndex).children[0].border.color ="white")
+                                }
+                                else{
+                                    print(gymGridView.itemAtIndex(oldIndex).children[0].border.color = status)
+                                    print(gymGridView.itemAtIndex(index).children[0].border.color ="white")
+                                    oldIndex = index
+
+                                }
+                                ////////////////////////////////// end change border.color function
+
                                 backend.retrieveData(odConfigurationPage.gymName,'None')
+
+
                             }
 
 
                         }
-
-                        QtObject{
-                            id: internalGym
-                            property color gymColorStatus: if(gymMouseArea.pressed){
-                                                                gymRectModel.border.color = "white"
-                                                               console.log()
-                                                           }
-                                                            else{
-                                                                 gymRectModel.border.color = status
-                                                           }
-
-
-                                 }
 
 
 
@@ -276,6 +290,22 @@ Rectangle {
                             //The first parameter is the gym name, the second parameter will be used to select the room
                             onClicked:  {
                                 odConfigurationPage.roomName = name
+                                //////////////////////////// Function that change the borde color of the selected Item: in this case GYM
+
+                                if(oldIndex === -1){
+                                    print(roomGridView.itemAtIndex(index).children[0].border.color ="white")
+                                    oldIndex = index
+                                }
+                                else if(oldIndex === index){
+                                    print(roomGridView.itemAtIndex(oldIndex).children[0].border.color ="white")
+                                }
+                                else{
+                                    print(roomGridView.itemAtIndex(oldIndex).children[0].border.color = status)
+                                    print(roomGridView.itemAtIndex(index).children[0].border.color ="white")
+                                    oldIndex = index
+
+                                }
+                                ////////////////////////////////// end change border.color function
                                 backend.retrieveData(odConfigurationPage.gymName,odConfigurationPage.roomName)
 
 
@@ -284,17 +314,6 @@ Rectangle {
 
                         }
 
-                                                    QtObject{
-                                                        id: internalRoom
-                                                        property color gymColorStatus: if(roomMouseArea.pressed){
-                                                                                           roomRectModel.border.color = "white"
-                                                                                       }
-                                                                                       else{
-                                                                                           roomRectModel.border.color = status
-                                                                                       }
-
-
-                                                    }
 
 
 
@@ -449,7 +468,6 @@ Rectangle {
     Connections{
         target: backend
 
-
         function onGymSig(gymList){
             gymModelList.clear()
             roomModelList.clear()
@@ -485,13 +503,14 @@ Rectangle {
     }
 
 
+
 }
 
 
 /*##^##
 Designer {
     D{i:0;autoSize:true;formeditorZoom:0.9;height:480;width:640}D{i:2}D{i:4}D{i:5}D{i:10}
-D{i:3}D{i:1}D{i:17}D{i:19}D{i:20}D{i:25}D{i:18}D{i:16}D{i:32}D{i:34}D{i:35}D{i:40}
-D{i:33}D{i:31}D{i:46}
+D{i:3}D{i:1}D{i:16}D{i:18}D{i:19}D{i:24}D{i:17}D{i:15}D{i:30}D{i:32}D{i:33}D{i:38}
+D{i:31}D{i:29}D{i:44}
 }
 ##^##*/

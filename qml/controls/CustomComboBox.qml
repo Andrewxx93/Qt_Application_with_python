@@ -44,6 +44,7 @@ ComboBox{
             height: 8
             contextType: "2d"
 
+
             Connections {
                 target: comboBox
                 function onPressedChanged() { canvas.requestPaint(); }
@@ -77,6 +78,7 @@ ComboBox{
 
            color: internal.dynamicColor
 
+
            border.color: comboBox.pressed ? "#81848c" : colorDefault  //#81848c
            border.width: comboBox.visualFocus ? 2 : 1
            radius: 2
@@ -92,6 +94,7 @@ ComboBox{
                contentItem: ListView {
                    clip: true
                    implicitHeight: contentHeight
+
                    model: comboBox.popup.visible ? comboBox.delegateModel : null
                    currentIndex: comboBox.highlightedIndex
 
@@ -100,12 +103,14 @@ ComboBox{
 
                background: Rectangle {
                    color: "#81848c"
+
                    border.color: "#495163"
                    radius: 2
 
 
                }
            }
+
 
 
 

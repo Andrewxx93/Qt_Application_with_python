@@ -54,6 +54,8 @@ ListView {
  // private
     property date selectedDate: new Date()
 
+
+
     width: 500;  height: 100 // default size
     snapMode:    ListView.SnapOneItem
     orientation: Qt.Horizontal
@@ -125,7 +127,17 @@ ListView {
                             enabled:    text.text  &&  day >= 0
 
                             onClicked: {
+
                                 selectedDate = new Date(year, month, date)
+                                var selectedDateFormatted
+                                var dd = String(selectedDate.getDate()).padStart(2, '0');
+                                var mm = String(selectedDate.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                var yyyy = selectedDate.getFullYear();
+
+                                selectedDateFormatted = dd + '-' + mm + '-' + yyyy;
+
+
+                                //print(selectedDate.toISOString().split('T')[0])
                                 root.clicked(selectedDate)
                                 //print(selectedDate.getDay())
                                 getSelectedDay(selectedDate)
